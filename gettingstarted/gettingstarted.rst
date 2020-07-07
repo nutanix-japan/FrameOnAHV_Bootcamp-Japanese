@@ -7,9 +7,9 @@ Getting Started
 Your User VLAN
 ++++++++++++++
 
-Typically, Hosted POC clusters provide 2x /25 VLANs. In order to provide adequate IP space and support Frame lab requirements for this Bootcamp, each user has been assigned a UserXX-Network. 
+Typically, Hosted POC clusters provide 2x /25 VLANs. In order to provide adequate IP space and support Frame lab requirements for this Bootcamp, each user has been assigned a UserXX-Network.
 
-   .. note:: Each User will have 10 IPs to use on each Network.
+   .. note:: User will share a DHCP Scope to use on the UserXX-Network's.
 
 Throughout the Workshop there are multiple instances where you will need to substitute *XYZ* with the correct octet for your subnet, for example:
 
@@ -18,38 +18,26 @@ Throughout the Workshop there are multiple instances where you will need to subs
    :header-rows: 1
 
    * - User Network
-     - Start Address
-     - End Address
+     - Shared DHCP Scope
    * - User01-Network
-     - 10.42.\ *XYZ*\ .140
-     - 10.42.\ *XYZ*\ .149
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User02-Network
-     - 10.42.\ *XYZ*\ .150
-     - 10.42.\ *XYZ*\ .159
+     - 110.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User03-Network
-     - 10.42.\ *XYZ*\ .160
-     - 10.42.\ *XYZ*\ .169
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User04-Network
-     - 10.42.\ *XYZ*\ .170
-     - 10.42.\ *XYZ*\ .179
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User05-Network
-     - 10.42.\ *XYZ*\ .180
-     - 10.42.\ *XYZ*\ .189
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User06-Network
-     - 10.42.\ *XYZ*\ .190
-     - 10.42.\ *XYZ*\ .199
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User07-Network
-     - 10.42.\ *XYZ*\ .200
-     - 10.42.\ *XYZ*\ .209
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User08-Network
-     - 10.42.\ *XYZ*\ .210
-     - 10.42.\ *XYZ*\ .219
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User09-Network
-     - 10.42.\ *XYZ*\ .220
-     - 10.42.\ *XYZ*\ .229
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User10-Network
-     - 10.42.\ *XYZ*\ .230
-     - 10.42.\ *XYZ*\ .239
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200
    * - User11-Network
-     - 10.42.\ *XYZ*\ .240
-     - 10.42.\ *XYZ*\ .249
+     - 10.21.\ *XYZ*\ .150-10.21.\ *XYZ*\ .200

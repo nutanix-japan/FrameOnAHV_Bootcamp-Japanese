@@ -110,7 +110,7 @@ Frame uses Prism Central Categories to allow the Cloud Connector Appliance to id
 
 #. Click **Save**.
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs** and select your *Initials*\ **-FrameImage** VM.
+#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs** and select your *Initials*\ **-GoldImage** VM.
 
 #. Select **Actions > Manage Categories** and add the **FrameRole:MasterTemplate** value to the VM. The Frame CCA will later search for VMs with this category value. Click **Save**.
 
@@ -149,11 +149,6 @@ The CCA is distributed as a bootable ISO image, not a disk image.
 
    - Select **Add New NIC**
       - **VLAN Name** - Primary
-
-         .. note::
-
-            Do **NOT** use your user configured VLAN. In CCA 2.1.X, the VM needs to exist in the same subnet as Prism Central. This issue is addressed in an upcoming release.
-
       - Select **Add**
 
 #. Click **Save** to create the VM.
@@ -167,14 +162,18 @@ The CCA is distributed as a bootable ISO image, not a disk image.
 Configuring the CCA
 +++++++++++++++++++
 
-#. Note the **IP Address** of the *Initials*\ **-FrameCCA** VM in Prism, and open in the IP in a new browser tab to access the **Cloud Connector Configuration** wizard.
+#. Note the **IP Address** of the *Initials*\ **-FrameCCA** VM in Prism, and open a new browser tab to \http://<*CCA-IP*>/ to access the **Cloud Connector Configuration** wizard.
 
    .. figure:: images/3.png
+
+   .. note::
+
+      Make sure you are using the same browser session as above. my.nutanix.com will look for the cookie.
 
 #. Fill in the following fields and click **Log In** to connect the CCA to your Nutanix environment:
 
    - **Username** - Previously created *Initials*\ -FramceSvc account
-   - **Password** - techX2020!
+   - **Password** - nutanix/4u
    - **Prism Central URL** - \https://<*Prism Central IP*>:9440
 
    .. figure:: images/4.png
@@ -182,10 +181,10 @@ Configuring the CCA
 #. Under **Select Cluster**, fill in the following fields and click **Next**:
 
    - **Cluster for virtual desktops** - *Your assigned cluster*
-   - **Network for virtual desktops** - *Your assigned user network*
+   - **Network for virtual desktops** - Primary
    - **Cloud account name** - *Initials*\ -\ *Cluster-Name*
 
-   .. figure:: images/5.png
+   .. figure:: images/5b.png
 
    .. note::
 
@@ -197,7 +196,7 @@ Configuring the CCA
 
    .. figure:: images/6.png
 
-#. Under **Select Sandbox Templates**, your *Initials*\ **-FrameImage** VM should automatically appear based on the **MasterTemplate** category value previously applied. Select the VM and specify **Windows 10** from the **OS** drop down. Click **Next**.
+#. Under **Select Sandbox Templates**, your *Initials*\ **-GoldImage** VM should automatically appear based on the **MasterTemplate** category value previously applied. Select the VM and specify **Windows 10** from the **OS** drop down. Click **Next**.
 
    .. figure:: images/7.png
 
@@ -220,5 +219,9 @@ Configuring the CCA
    The **C** status indicates that the account is still being created. Prism Central will provision a Workload Proxy VM (**frame-workload-proxy-####**) in the desktop VLAN specified during CCA configuration. Once the status changes to **R**, indicating the workload proxy has been successfully provisioned, continue to the next exercise.
 
    .. figure:: images/10.png
+
+   .. note::
+
+      You may need to refresh your browser.
 
    You're now ready to begin provisioning AHV hosted desktops with Frame!
