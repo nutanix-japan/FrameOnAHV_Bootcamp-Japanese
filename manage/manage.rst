@@ -23,7 +23,7 @@ Deploying a Desktop Pool
    - **Cloud Provider** - Nutanix
    - **Region** - *The Cloud Account Name previously configured through the CCA*
 
-   .. figure:: images/1.png
+   .. figure:: images/1b.png
 
 #. Under **Configuration**, note the available options correspond to your CCA selections. Choose an **Instance Type** and increase the slider value to provide more storage capacity to the VMs. Do **NOT** select **Persistent desktop**. Click **Next**.
 
@@ -330,22 +330,3 @@ Frame makes it very simple to customize your "Gold" image and add new applicatio
       This session may take slightly longer to start, as VM resources may not yet be pre-booted according to the Capacity configuration. You can verify this on the **Status** page in the **Xi Frame** portal.
 
    In minutes you've rolled out an updated image to your resource pool, without interrupting on-going sessions.
-
-Next Steps
-++++++++++
-
-To learn more about Xi Frame, here are specific resources for Sales Engineers:
-
-- `Frame Public Documentation <https://docs.frame.nutanix.com/>`_, including how your customers can get started with a `30-day Free Trial <https://docs.frame.nutanix.com/account-management/sign-up.html>`_.
-- Questions on selling Frame? Ask on #frame-sales, or send an email to frame-sales@nutanix.com
-- Questions about Frame on AHV? Post your questions on #frame-ahv
-
-Frame can be used in a variety of use cases. To best serve each customer, we advise the following selling best practices:
-
-- Know their use case, business and technical requirements, and success criteria. Qualify the customer’s use case using our `list of sales and technical questions <https://sites.google.com/nutanix.com/xiframe/home/qualifying-questions>`_ (Internal Only).
-- Share a completed `Frame Discovery Workbook <https://sites.google.com/nutanix.com/xiframe/home/service-delivery>`_ (Internal Only) with the Frame Sales Specialists and Solution Architects to accelerate getting the right proposal and solution design to your customer.
-
-Successful deployment of Frame-managed workloads on Nutanix AHV/AOS/HCI to support enterprise use cases is highly dependent on the enterprise’s IT infrastructure. Two critical infrastructure components that you need to confirm are ready for a Frame implementation are:
-
-- Networking (between the AHV clusters and the Frame Control Plane, between end user and Frame Control Plane, and between end user and workload VMs). Use the AHV Cluster Prerequisites Checklist as a guide to validate that the AHV Cluster and network is ready for Frame.
-- The enterprise’s Windows domain, if the Frame-managed workload VMs must be joined to the Windows Active Directory.

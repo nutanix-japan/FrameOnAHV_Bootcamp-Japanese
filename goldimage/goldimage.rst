@@ -25,7 +25,7 @@ Deploying a VM
 
 #. Fill out the following fields:
 
-   - **Name** - *Initials*\ -FrameImage
+   - **Name** - *Initials*\ -GoldImage
    - **Description** - (Optional) Description for your VM.
    - **vCPU(s)** - 2
    - **Number of Cores per vCPU** - 1
@@ -38,7 +38,7 @@ Deploying a VM
        - Select **Add**
 
    - Select **Add New NIC**
-       - **VLAN Name** - *User Assigned VLAN*
+       - **VLAN Name** - Primary
        - Select **Add**
 
 #. Click **Save** to create the VM.
@@ -57,7 +57,7 @@ Before starting to build your **Windows 10** image it is important the ensure th
    - **User Name** - Nutanix
    - **Password** - nutanix/4u
 
-#. Open **System Settings > Windows Update** and click **Pause Updates for 7 Days**.
+#. Open **Start > Settings > Updates & Security > Windows Update** and click **Pause Updates for 7 Days**.
 
    .. figure:: images/24.png
 
@@ -69,7 +69,7 @@ Running Citrix Optimizer
  - **User Name** - Nutanix
  - **Password** - nutanix/4u
 
-#. Within the VM console, download http://10.42.194.11/workshop_staging/CitrixOptimizer.zip and extract to a directory.
+#. Within the VM console, download https://ntnx.how/CitrixOptimizer and extract to a directory.
 
 #. Right-click **CitrixOptimizer.exe** and select **Run as Administrator**.
 
@@ -96,7 +96,7 @@ Running Citrix Optimizer
 ..   Running VMware OS Optimization Tool
       +++++++++++++++++++++++++++++++++++
 
-      #. Within the VM console, download http://10.42.194.11/workshop_staging/VMwareOSOptimizationTool.zip and extract to a directory.
+      #. Within the VM console, download https://ntnx.how/VMwareOSOptimizationTool and extract to a directory.
 
       #. Right-click **VMwareOSOptimizationTool.exe** and select **Run as Administrator**.
 
@@ -170,17 +170,17 @@ Additionally, during the brokering workflow, the Frame agent works in conjunctio
 
 #. After approximately 60 seconds, connect to the VM via RDP and execute the following in **PowerShell** (*This is done to put the Golden Image into a clean SysPrep state*):
 
+    .. note::
+
+       If prompted that another user is currently signed in, click **Yes** to proceed logging in as the **Nutanix** user.
+
     .. code-block:: PowerShell
 
       Start-Process -FilePath "C:\Windows\System32\Sysprep\Sysprep.exe" -ArgumentList "/oobe /shutdown /generalize /unattend:C:\ProgramData\Frame\Sysprep\Unattend.xml" -Wait -NoNewWindow
 
-   .. note::
-
-      If prompted that another user is currently signed in, click **Yes** to proceed logging in as the **Nutanix** user.
-
    Once Sysprep is complete, the machine will automatically power off.
 
-#. Update the VM to **Eject** the Frame Guest Agent installer .iso image.
+#. Update the VM to :fa:`eject` **Eject** the Frame Guest Agent installer .iso image.
 
    .. figure:: images/23.png
 
