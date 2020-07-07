@@ -26,7 +26,7 @@
 .. _getting_started:
 
 ---------------
-はじめに 修正中
+はじめに ようこそそお
 ---------------
 
 Welcome to the End User Computing bootcamp featuring Xi Frame. This bootcamp is meant to provide you with first hand experience in why Nutanix is an ideal platform for VDI workloads, and can deliver a fully integrated experience with our cloud-hosted broker, Xi Frame. In addition to the benefits than Nutanix HCI brings to any virtual desktop deployment, such as linear scalability and consistent performance, Nutanix brings additional benefits that you'll explore through labs:
