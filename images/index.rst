@@ -26,7 +26,7 @@
 .. _getting_started:
 
 ---------------
-はじめに ようこそそお
+ようこそ
 ---------------
 
 Welcome to the End User Computing bootcamp featuring Xi Frame. This bootcamp is meant to provide you with first hand experience in why Nutanix is an ideal platform for VDI workloads, and can deliver a fully integrated experience with our cloud-hosted broker, Xi Frame. In addition to the benefits than Nutanix HCI brings to any virtual desktop deployment, such as linear scalability and consistent performance, Nutanix brings additional benefits that you'll explore through labs:
@@ -37,25 +37,35 @@ Welcome to the End User Computing bootcamp featuring Xi Frame. This bootcamp is 
 - Native microsegmentation with Nutanix Flow to secure a virtual desktop environment
 - Rich monitoring and automation capabilities with Prism Ops
 
-What's New
+Xi Frameを使用したエンドユーザーコンピューティングのブートキャンプへようこそ。
+このブートキャンプでは、NutanixがVDIのワークロードとして理想的なプラットフォームであることを直接体験できることを目的としており、
+クラウドでホストされるブローカーであるXi Frameと完全に統合されたエクスペリエンスを提供できます。
+Nutanix HCIが並列でのスケーラビリティや一貫したパフォーマンスなどの仮想デスクトップの展開にもたらす利点に加えて、
+Nutanixはラボを通じて探求する追加の利点をもたらします。
+
+-AHVとの統合により、オンプレミスの仮想デスクトップを実行するための、管理が容易な無料のプラットフォームを提供
+-大規模なデスクトッププールへのイメージの更新のロールアウトを含む、高速なデスクトッププロビジョニング
+-ユーザーデータ、プロファイル、ユーザーパーソナライゼーションレイヤーを提供するNutanixファイルを使用したネイティブファイルサービス
+-AHVネイティブのマイクロセグメンテーション
+-Prism Ops(Prism Pro)による豊富な監視機能と自動化機能
+
+最新情報
 ++++++++++
 
-- Workshop updated for the following software versions:
+- ワークショップは次のソフトウェアバージョンに更新されました。:
     - AOS & PC 5.17.0.3
-  pane
-- Optional Lab Updates:
 
-Agenda
+目次
 ++++++
 
-- Introductions
-- Preparing Golden Image
-- Managing Frame
-- Using with Files
-- Using with Flow
-- Using with Prism Ops
+- Introductions はじめに
+- Preparing Golden ImageFrame ゴールデンイメージの準備
+- Managing Frame Frameの管理操作
+- Using with Files Filesの利用
+- Using with Flow Flowの利用
+- Using with Prism Ops Prism Ops(Prism Pro)の利用
 
-Introductions
+Introductions　はじめに
 +++++++++++++
 
 - Name
