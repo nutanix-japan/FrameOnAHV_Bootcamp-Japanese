@@ -1,29 +1,31 @@
 .. _framegoldimage:
 
 ------------------------------------
-Building & Optimizing the Gold Image
+ゴールドイメージの構築と最適化
 ------------------------------------
 
-When we install a vanilla client operating system, we need to keep in mind that this OS was built for physical devices (i.e. laptops and desktops), with direct attached devices and limited noisy neighbor effects. If we install that same OS in a VM we might see different results, hence the need for optimization. The Nutanix Performance/Solutions Engineering team for EUC has tested various optimizations and the lab, and validated the following results:
+Xi FrameはクライアントのイメージとなるSandboxと呼ばれるゴールドマスターを作成します。
+
+Vanilla クライアントオペレーティングシステムは、通常、物理デバイス（ラップトップPCやデスクトップPCなど）で動作することを前提としています。ハードウェアデバイスに直接接続され、ホスト上の高負荷な仮想マシンから影響を受ける（ノイジーネイバー）ことが想定されていません。そのため、そのOSをVMとしてインストールすると想定外の動作をする可能性があり、仮想環境上で動作させるための最適化が必要です。Nunitaxのパフォーマンス/ソリューションエンジニアリングチームでは、さまざまな最適化とラボをテストし、次の検証結果となりました。
 
 .. figure:: images/19.png
 
-As you can see there’s a 48% improvement of desktop density per node when applying baseline Citrix optimizations, and increases to 57% with a second pass using VMware OS optimization recommendations. Note that both sets of optimizations are independent of underlying hypervisor, and rather tune services within the OS guest.
+ご覧のとおり、CitrixのOS最適化ツールを適用すると、ノードあたりのデスクトップ集約率が48％向上し、VMwareのOS最適化の推奨事項に従うと集約率が57％まで向上します。どちらの最適化方法も、ハイパーバイザーとは無関係であり、OSゲスト内のサービスを調整します。
 
-**In this lab you will install the Frame Agent within a VM, and optimize the VM using the Citrix Optimizer.**
+**このラボでは、仮想マシンにFrame Agentをインストールし、Citrix Optimizerを使用して仮想マシンのOSを最適化します。**
 
-Deploying a VM
+仮想マシンのデプロイ
 ++++++++++++++
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs**.
+#. **Prism Central**から:fa:`bars` **> Virtual Infrastructure > VMs** を選択します。
 
    .. figure:: images/1.png
 
-#. Click **Create VM**.
+#. **Create VM**を選択します。
 
-#. Select your assigned cluster and click **OK**.
+#. 割り当てられているクラスターを選択し **OK**　をクリックします。
 
-#. Fill out the following fields:
+#. 次の項目を入力します。
 
    - **Name** - *Initials*\ -GoldImage
    - **Description** - (Optional) Description for your VM.
@@ -31,67 +33,67 @@ Deploying a VM
    - **Number of Cores per vCPU** - 1
    - **Memory** - 4 GiB
 
-   - Select **+ Add New Disk**
+   - **+ Add New Disk** を選択します。
        - **Type** - DISK
        - **Operation** - Clone from Image Service
        - **Image** - Win10v1903.qcow2
-       - Select **Add**
+       - **Add** を選択します。
 
-   - Select **Add New NIC**
+   - **Add New NIC** を選択します。
        - **VLAN Name** - Primary
-       - Select **Add**
+       - **Add** を選択します。
 
-#. Click **Save** to create the VM.
+#. **Save** をクリックして、仮想マシンを作成します。
 
-#. Select your VM and click **Power On**.
+#. 作成した仮想マシンを選択して **Power On** をクリックします。
 
 .. _FramePausingUpdates:
 
-Pausing Updates
-+++++++++++++++
+Windows Update の一時停止
+++++++++++++++++++++++++
 
-Before starting to build your **Windows 10** image it is important the ensure that no Windows Updates are in progress, as this can cause issues with cloning.
+**Windows 10** イメージの構築を開始する前に、Windows Updateが進行中でないことを確認することが重要です。Windows Updateが進行中の場合、クローン作成で問題が発生する可能性があります。
 
-#. Open the VM console or connect via RDP.
+#. Prism上の仮想マシンのコンソールを開くか、RDP経由で仮想マシンに接続します。
 
    - **User Name** - Nutanix
    - **Password** - nutanix/4u
 
-#. Open **Start > Settings > Updates & Security > Windows Update** and click **Pause Updates for 7 Days**.
+#. **Start > Settings > Updates & Security > Windows Update** を開き **Pause Updates for 7 Days** をクリックします。
 
    .. figure:: images/24.png
 
-Running Citrix Optimizer
+Citrix Optimizerの実行
 ++++++++++++++++++++++++
 
-#. Open the VM console or connect via RDP.
+#. Prism上の仮想マシンのコンソールを開くか、RDP経由で仮想マシンに接続します。
 
- - **User Name** - Nutanix
- - **Password** - nutanix/4u
+   - **User Name** - Nutanix
+   - **Password** - nutanix/4u
 
-#. Within the VM console, download https://ntnx.how/CitrixOptimizer and extract to a directory.
+#. 仮想マシン内で  https://ntnx.how/CitrixOptimizer  をダウンロードして、ファイルを展開します。
 
-#. Right-click **CitrixOptimizer.exe** and select **Run as Administrator**.
+#. **CitrixOptimizer.exe** を右クリックして **Run as Administrator** を選択します。
 
- .. figure:: images/12.png
+   .. figure:: images/12.png
 
-#. Select the recommended optimization template based on the Windows build being used for the gold image.
+#. ゴールドイメージに使用されているWindowsビルドバージョンに基づいて、推奨される最適化テンプレートを選択します。
 
- .. figure:: images/13.png
+   .. figure:: images/13.png
 
-#. Click **Select All** to select all available optimizations and click **Analyze**.
+#. **Select All** を選択し **Analyze** をクリックします。
 
- .. figure:: images/14.png
+   .. figure:: images/14.png
 
-#. Click **View Results** to see a detailed report of the status of each available optimization.
+#. **View Results** をクリックして、利用可能な最適化に関する詳細レポートを表示します。
 
-#. Return to the **Citrix Optimizer** and click **Done > Optimize** to apply the selected optimizations.
+#. **Citrix Optimizer** に戻り **Done > Optimize** をクリックし、選択した最適化内容をを適用します。
 
- .. figure:: images/15.png
+   .. figure:: images/15.png
 
-#. Once the tool has completed, you can click **View Results** to view an updated report. You can now close the tool.
+#. ツールの処理が完了したら **View Results** をクリックして、更新されたレポートを表示できます。
 
-#. Review the results and then **restart your Gold Image VM**.
+#. 結果を確認して **ゴールドイメージの仮想マシンを再起動**します。
 
 ..   Running VMware OS Optimization Tool
       +++++++++++++++++++++++++++++++++++
@@ -118,79 +120,74 @@ Running Citrix Optimizer
 
       #. Review the results and then **restart your Gold Image VM**.
 
-Installing the Frame Guest Agent
+Frame Guest Agentのインストール
 ++++++++++++++++++++++++++++++++
-
-The Frame Guest Agent (FGA) is the Frame component installed in every Frame-managed workload VM (Sandbox, Production instances, Utility servers). The FGA implements the Frame Remoting Protocol (FRP), an H.264-based video stream, between the end user’s endpoint device and the Frame-managed workload VM. If an NVIDIA GPU is supported within the workload VM, FGA will leverage NVENC hardware-based H.264 encoding to offload encoding from workload VM’s CPU(s).
-
-Additionally, during the brokering workflow, the Frame agent works in conjunction with Frame platform to ensure that end user requests for access to a workload VM is authorized before allowing the FRP stream to start. FGA also enforces session setting policies (clipboard sync, directionality of clipboard sync, file upload/download, printing, timeout parameters, QoS parameters, etc.) and handles the mounting and unmounting of personal drives, enterprise profile disks, and integrations to cloud storage providers, as configured by the Account Administrator.
+Frame Guest Agent（FGA）は、Frameで管理するワークロードVM
+（サンドボックス、実稼働インスタンス、ユーティリティサーバー）にインストールされるFrameコンポーネントです。
+FGAは、エンドユーザーのエンドポイントデバイスとFrame管理のワークロードVMの間にH.264ベースのFrame Remoting Protocol（FRP）を実装して、画面転送を行ないます。NVIDIA GPUがワークロードVM内で利用できる場合、FGAはNVIDIAグラフィックカードのNVENCのH.264エンコーダーを利用して、ワークロードVMのCPUの負荷を軽減します。
+さらに、FGAはFrameプラットフォームのブローカー機能と連携して、ワークロードVMへのアクセスを求めるエンドユーザーのリクエストが確実に許可されるようにします。
+FGAは、セッション設定ポリシー（ローカルとFrameデスクトップ間のクリップボード機能、クリップボード機能の双方向・片方かの制御、ファイルのアップロード/ダウンロード、印刷、タイムアウトパラメータ、QoSパラメータなど）も適用します。また、個人用ドライブ、エンタープライズプロファイルディスクのマウントとアンマウント、およびクラウドストレージ連携を処理します。
 
    .. note::
 
-      Nutanix Guest Tools cannot be installed onto your gold master image, as this could cause communication issues between the Frame backplane and workload instances. If your image already has Nutanix Guest Tools installed, you must install VirtIO drivers before uninstalling Nutanix Guest Tools. If you attempt to remove Nutanix Guest Tools without first installing VirtIO drivers, your virtual machine will not boot.
+      Nutanix Guest Toolsをゴールドマスターイメージにインストールすることはできません。これは、Frameバックプレーンとワークロードインスタンス間の通信の問題を引き起こす可能性があるためです。イメージにすでにNutanixGuest Toolsがインストールされている場合は、Nutanix Guest Toolsをアンインストールする前にVirtIOドライバーをインストールする必要があります。最初にVirtIOドライバーをインストールせずにNutanix Guest Toolsを削除しようとすると、仮想マシンが起動しなくなります。
 
-#. In **Prism Central**, select your GoldImage VM and take note of the IP Address.
+#. **Prism Central** からゴールドマスターイメージの仮想マシンを選択し、IPアドレスをメモを取ります。
 
-#.  Then click **Actions > Update**.
+#. **Actions > Update** をクリックします。
 
    .. figure:: images/2.png
 
-#. Under **Disks > CD-ROM**, select :fa:`pencil` and fill out the following fields:
+#. **Disks > CD-ROM** を選択し :fa:`pencil` から次の項目を選択します。
 
-   - **Operation** - Clone from Image Service
-   - **Image** - FrameGuestAgentInstaller_1.0.2.2_7930.iso
+    - **Operation** - Clone from Image Service
+    - **Image** - FrameGuestAgentInstaller_1.0.2.2_7930.iso
 
-#. Click **Update > Save**.
+#. **Update > Save** をクリックします。
 
-#. Connect to the VM via **RDP only**.
+#. **RDP経由で**仮想マシンに接続します。　
 
    .. note::
 
-      Once the Frame Guest Agent is successfully installed the VM can no longer be accessed via the built-in AHV VNC console.
+      Frame Guest Agentがインストールされると、AHV VNCコンソールから仮想マシンにアクセスできなくなります。
 
-#. Update the VM timezone to UTC. Click **Sync Now** to ensure the time on your VM is accurate.
+#. 仮想マシンのOSのタイムゾーンをUTCに更新します。**Sync Now** をクリックして、仮想マシンの時刻が正確であることを確認します。
 
    .. figure:: images/20.png
 
-#. **IMPORTANT** From the **Control Panel**, uninstall any previously installed copied of **Microsoft Visual C++ Redistributable**.
-
-   .. note::
-
-      **ANY** previously installed **Microsoft Visual C++ Redistributable** means **ALL** of them, and not just the two in the screenshot below.
+#. **重要：** **Control Panel**から、インストールされている **Microsoft Visual C++ Redistributable** をアンインストールします。
 
    .. figure:: images/22.png
 
-#. Open **D:\\FrameGuestAgentInstall_1.0.2.2_7930.exe** to launch the Frame Guest Agent installer.
+#. Frameデスクトップ内で **D:\\FrameGuestAgentInstall_1.0.2.2_7930.exe** を起動すると、FGAのインストーラが起動します。
 
-#. Agree to the license agreement and click **Install**.
+#. 使用許諾契約に同意し **Install** をクリックします。
 
    .. figure:: images/21.png
 
-#. When prompted, click **Restart** to complete the installation.
+#. プロンプトが表示されたら **Restart** をクリックしてインストールを完了します。
 
-#. After approximately 60 seconds, connect to the VM via RDP and execute the following in **PowerShell** (*This is done to put the Golden Image into a clean SysPrep state*):
+#. 約60秒後、リモートデスクトップ経由で仮想マシンに接続し、PowerShellで以下を実行します。（これは、ゴールデンイメージをクリーンなSysPrep状態にするために行われます）。
 
     .. note::
 
-       If prompted that another user is currently signed in, click **Yes** to proceed logging in as the **Nutanix** user.
+       別のユーザーがログイン中というプロンプトが表示された場合は **Yes** をクリックして **Nutanix** ユーザーのままログインを続行します。
 
     .. code-block:: PowerShell
 
       Start-Process -FilePath "C:\Windows\System32\Sysprep\Sysprep.exe" -ArgumentList "/oobe /shutdown /generalize /unattend:C:\ProgramData\Frame\Sysprep\Unattend.xml" -Wait -NoNewWindow
 
-   Once Sysprep is complete, the machine will automatically power off.
+   Sysprepが完了すると、マシンの電源が自動的にオフになります。
 
-#. Update the VM to :fa:`eject` **Eject** the Frame Guest Agent installer .iso image.
+#. 仮想マシンの :fa:`eject` から、Frame Guest Agent installer.isoイメージを **取り出し** ます。
 
    .. figure:: images/23.png
 
-You have successfully created a gold master image to use for your Xi Frame workloads.
+Xi Frameのワークロードに使用するゴールドマスターイメージが正常に作成されました。
 
-Takeaways
+ポイント
 +++++++++
 
-What are the key things learned in this exercise?
+- Frame用にカスタマイズされたWindows 10のゴールドイメージはすぐに簡単に作成できます。
 
-- Creating a customized Windows 10 gold image for Frame is quick and easy.
-
-- EUC image optimization tools are not solution or hypervisor specific and can be easily applied to improve virtual desktop performance and increase host density.
+- EUCにおけるイメージのOS最適化ツールは、ソリューションやハイパーバイザー固有の機能ではなく、仮想デスクトップのパフォーマンスを向上させ、ホストの集約率wを高めるために簡単に適用できるものです。

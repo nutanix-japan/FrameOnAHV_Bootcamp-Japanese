@@ -1,98 +1,96 @@
 .. _deploycca:
 
 --------------------------------------------
-Deploying Xi Frame Cloud Connector Appliance
+Xi Frame Cloud Connector Appliance（CCA）の導入
 --------------------------------------------
 
-While the Frame control plane is fully cloud-hosted, running on-premises desktops require proxy VMs, as shown in the diagram below.
+Frameコントロールプレーンは完全にクラウドで提供されますが、オンプレミスデスクトップを実行するには、次の図に示すようにプロキシVMが必要となります。
 
 .. figure:: images/00.png
 
-An on-premises virtual Cloud Connector Appliance (CCA), enables the cloud-hosted Frame Platform service to communicate with the on-premises Prism Central API. The CCA forwards commands to create, start, stop, and delete VMs to Prism Central, based on requests from the Frame Platform. The CCA appliance must be on the same VLAN as Prism Central.
+オンプレミスのCCAにより、クラウドで提供されるFrameプラットフォームサービスがオンプレミスのPrism Central APIと通信できるようになります。CCAは、Frameプラットフォームからのリクエストに基づいて、仮想マシンを作成、開始、停止、および削除するコマンドをPrism Centralに転送します。そのため、CCAはPrism Centralと同じVLAN上にある必要があります。
 
-After the initial configuration following the CCA wizard deployment, and upon successful registration of the AHV Cloud Account to the Frame Platform, a second virtual appliance is automatically created. This second appliance is the Workload Cloud Connector Appliance (WCCA, also known as the Workload Proxy in Prism). The WCCA allows for Frame Platform to send orchestration information to all user workload VMs (Sandbox, Production instances, and Utility Servers). Without this appliance, end users will not be able to connect to the workload VMs.
+CCAの初期構成の後、AHVクラウドアカウントがFrameプラットフォームに正常に登録されると、Workload Cloud Connectorアプライアンス（WCCA、Prismではワークロードプロキシとも呼ばれます）が自動的にオンプレミス側に生成されます。WCCAにより、Frameプラットフォームはオーケストレーション情報をすべてのユーザーワークロードVM（サンドボックス、実稼働インスタンス、およびユーティリティサーバー）に送信できます。このアプライアンスがないと、エンドユーザーはワークロードVMに接続できません。
 
-**In this lab you will deploy the Frame Cloud Connector Appliance and configure the connection between your cluster and the Frame control plane.**
+**このラボでは、Frame Cloud Connectorアプライアンスをデプロイし、オンプレミスのNutanixクラスターとFrameコントロールプレーン間の接続を構成します。**
 
 .. note::
 
-   The Frame Cloud Connector creation process is 100% automated starting with the release of Prism Central 5.11.1 via the Settings menu. For the purposes of this lab, you will follow the manual procedure below for deploying and configuring the appliance VM.
+   CCAの作成プロセスは、[設定]メニューからのPrism Central 5.11.1のリリース以降、100％自動化されています。このラボでは、以下の手動に従って、アプライアンスVMをデプロイして構成します。
 
-Creating a Frame Account
-++++++++++++++++++++++++
+Frame Accountアカウントの作成
++++++++++++++++++++++++++++
 
-In this exercise we'll take advantage of the Xi Frame trial offering, using your My Nutanix credentials.
+この演習では、My Nutanixの資格情報を使用して、Xi Frameトライアルサービスを利用します。
 
-   .. note::
+#. My Nutanix資格情報を使用して、ブラウザで https://my.nutanix.com にログインします。
 
-      If you've previously used the Frame trial, inform a proctor so your account can be reset.
-
-#. In a browser, log into https://my.nutanix.com with your My Nutanix credentials.
-
-#. Under **Xi Cloud Services > Xi Frame**, click **Start Trial**.
+#. **Xi Cloud Services > Xi Frame** から **Start Trial** をクリックします。
 
    .. figure:: images/0a.png
 
    .. note::
 
-     If you have already started a trial, click **Launch**
+    　トライアルを既に開始している場合は **Launch** をクリックします。
 
-#. Provide the additional requested information and click **Continue** to activate your 30 day trial.
+#. 必要な追加情報を入力し **Continue** をクリックして30日間の試用を有効にします。
 
-#. When prompted with multiple trial options, click **Start your 30 day free trial**. This will allow you to provide your own infrastructure to host desktops for up to 5 named users for a 30 day period.
+#. **Start your 30 day free trial** をクリックします。最大5ユーザーまでデスクトップを30日間提供することができます。
 
    .. figure:: images/0b.png
 
-#. You will be taken to the Frame Account Administration portal. Select **Organizations** from the left hand menu and click **Add Organization**. Specify a name and save.
+5. Frameアカウント管理ポータルで、左側のメニューから **Organizations** を選択し **Create Organization** をクリックします。任意の名前を入力して **Create ** をクリックします。
 
    .. figure:: images/0c.png
 
    .. note::
 
-      Frame Platform uses a 3-tiered hierarchy for organizing administration, cloud resources, and access to accounts.
+      Frameプラットフォームは、管理、クラウドリソース、およびアカウント情報を登録するために、以下の3つ階層を使用します。
 
       **Customers**
 
-         The Customers tier is the highest tier within the Frame platform. This is essentially the “Master Account” for a single business entity with a billing relationship with Nutanix. By following the Free Trial workflow, you have created your own Customer entity.
+         Customers（顧客層）は、Frameプラットフォーム内の最上位の層です。Nutanix社との利用契約を結ぶ事業体の「マスターアカウント」です。
 
       **Organizations**
 
-         The Organizations tier is the second highest tier within the Frame platform. There can be many organizations listed under one Customer depending on the use case. A business may use organizations to set up unique environments for different departments within their company. For the purposes of this lab, you will create one Organization entity which will map to your AHV cluster resources and hold your first Frame account.
+         Organizations（組織層）は、Frameプラットフォーム内で2番目に高い層です。ユースケースによっては、1顧客配下に多数の組織が作成される場合があります。企業は、Organizations（組織層）を使用して、社内のさまざまな部門に固有の環境をセットアップできます。このラボでは、アカウントを保持する1組織を作成し、AHVクラスタリソースを紐付けます。
 
       **Accounts**
 
-         This is where an administrator will manage their gold master image, install and manage their applications, and configure their production VMs. This is also where administrators will create Launchpads for their end users. When an end user logs into Frame, they are accessing one of the Launchpads associated to one of the accounts listed under an Organization in order to reach their workload VMs.
+         ワークロードVMを提供する場所です。また、ユーザー用のLaunchPadを作成する場所でもあります。
+         エンドユーザーがFrameにログインすると、ワークロードVMに接続するために
+         組織下にある各アカウントに関連付けられた各アカウント毎のLaunchPadにアクセスします。
 
-Adding Prism Service Account
+Prismサービスアカウントの追加
 ++++++++++++++++++++++++++++
 
-#. In **Prism Central**, select :fa:`bars` **> Prism Central Settings > Local User Management**.
+#. **Prism Central** から :fa:`bars` **> Prism Central Settings > Local User Management** を選択します。
 
-#. Create a new service account for the Frame CCA but filling out the following fields and clicking **Save**:
+#. Frame CCAの新しいサービスアカウントを作成するため、次の項目を入力して **Save** をクリックします。
 
    - **Username** - *Initials*\ -FrameSvc
    - **First Name** - *Initials* Frame
    - **Last Name** - Service Account
-   - **Email** - (Any e-mail address)
+   - **Email** - (e-mail address)
    - **Password** - nutanix/4u
-   - Under **Roles**, select **User Admin** and **Prism Central Admin**
+   - **Roles** - **User Admin** と **Prism Central Admin** を選択します。
 
    .. figure:: images/1.png
 
-Adding Frame Category
+Frameカテゴリーの追加
 +++++++++++++++++++++
 
-Frame uses Prism Central Categories to allow the Cloud Connector Appliance to identify the template images that will be used to create the Frame account Sandboxes and desktop VMs.
+FrameはPrism Central Categoriesを使用して、Cloud Connector Applianceが、FrameアカウントのサンドボックスとデスクトップVMの作成に使用されるテンプレートイメージを識別できるようにします。
 
 .. note::
 
-   Creation of the category and values only needs to occur once per Prism Central instance, but the category values will need to be assigned to the appropriate VMs for all subsequent lab completions.
+   カテゴリと値の作成は、Prism Centralインスタンスごとに1回だけ実行する必要があります。
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
+#. **Prism Central** から :fa:`bars` **> Virtual Infrastructure > Categories**　を選択します。
 
    .. figure:: images/2.png
 
-#. Review the available categories. If **FrameRole** doesn't already exist, click **New Category** and fill out the following fields:
+#. 利用可能なカテゴリーを確認します。 **FrameRole** が存在しない場合は **New Category** をクリックして、次の項目を入力します。
 
    - **Name** - FrameRole
    - **Purpose** - Allowing resource access based on Application Team
@@ -104,83 +102,83 @@ Frame uses Prism Central Categories to allow the Cloud Connector Appliance to id
 
    .. note::
 
-      Use the :fa:`plus` button to add additional values.
+      :fa:`plus` ボタンで値を追加できます。
 
    .. figure:: images/2b.png
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs** and select your *Initials*\ **-GoldImage** VM.
+#. **Prism Central** から :fa:`bars` **> Virtual Infrastructure > VMs** をクリックし *Initials*\ **-GoldImage** VMを選択します。
 
-#. Select **Actions > Manage Categories** and add the **FrameRole:MasterTemplate** value to the VM. The Frame CCA will later search for VMs with this category value. Click **Save**.
+#. **Actions > Manage Categories** を選択し **FrameRole:MasterTemplate** の値をVMに追加します。Frame CCAは、このカテゴリー値を持つVMをあとで検索します。 **Save** をクリックします。
 
    .. figure:: images/2c.png
 
-Creating the CCA VM
+CCA VMの作成
 +++++++++++++++++++
 
-The CCA is distributed as a bootable ISO image, not a disk image.
+CCAは、ディスクイメージではなく、起動可能なISOイメージとして配布されます。
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > VMs**.
+#. **Prism Central** から :fa:`bars` **> Virtual Infrastructure > VMs**　を選択します。
 
-#. Click **Create VM**.
+#. **Create VM** をクリックします。
 
-#. Select your assigned cluster and click **OK**.
+#. 割り当てられたクラスターを選択し **OK** をクリックします。
 
-#. Fill out the following fields:
+#. 次の項目を入力します。
 
    - **Name** - *Initials*-FrameCCA
-   - **Description** - (Optional) Description for your VM.
+   - **Description** - (オプション) VMの説明
    - **vCPU(s)** - 1
    - **Number of Cores per vCPU** - 2
    - **Memory** - 4 GiB
 
-   - Beside **Disks > CD-ROM**, select :fa:`pencil`
+   - **Disks > CD-ROM** :fa:`pencil`
       - **Operation** - Clone from Image Service
       - **Image** - FrameCCA-2.1.6.iso
-      - Select **Update**
+      - **Update** を選択します。
 
    - Select **+ Add New Disk**
       - **Type** - DISK
       - **Operation** - Allocate on Storage Container
       - **Storage Container** - Default
       - **Size** - 0.1 GiB
-      - Select **Add**
+      - **Add** を選択します。
 
    - Select **Add New NIC**
       - **VLAN Name** - Primary
-      - Select **Add**
+      - **Add** を選択します。
 
-#. Click **Save** to create the VM.
+#. **Save** をクリックしてVMを作成します。
 
-#. Select your VM and click **Actions > Power On**.
+#. VMを選択し **Actions > Power On** をクリックします。
 
    .. note::
 
-      By default, the CCA will try to acquire an IP address from a DHCP server. If you wish to set a static IP, use the console to access the CCA VM.
+      デフォルトでは、CCAはDHCPサーバーからIPアドレスを取得しようとします。静的IPアドレスを設定する場合は、コンソールを使用してCCA VMにアクセスします。
 
-Configuring the CCA
+CCAの設定
 +++++++++++++++++++
 
-#. Note the **IP Address** of the *Initials*\ **-FrameCCA** VM in Prism, and open a new browser tab to \http://<*CCA-IP*>/ to access the **Cloud Connector Configuration** wizard.
+#. Prismで *Initials*\ **-FrameCCA** VM の **IP Address** をメモし、新しいブラウザータブを開いて \http://<*CCA-IP*>/ にアクセスし、Cloud Connector構成ウィザードを開きます。
 
    .. figure:: images/3.png
 
    .. note::
 
-      Make sure you are using the same browser session as above. my.nutanix.com will look for the cookie.
+      my.nutanix.comはCookieを使用しますので、上記と同じブラウザセッションを使用ください。
 
-#. Fill in the following fields and click **Log In** to connect the CCA to your Nutanix environment:
+#. 以下のフィールドに入力し **Log In** をクリックして、CCAをオンプレミスのNutanix環境に接続します。
 
-   - **Username** - Previously created *Initials*\ -FramceSvc account
+   - **Username** - 既に作成している *Initials*\ -FramceSvc account
    - **Password** - nutanix/4u
    - **Prism Central URL** - \https://<*Prism Central IP*>:9440
 
    .. figure:: images/4.png
 
-#. Under **Select Cluster**, fill in the following fields and click **Next**:
+#. **Select Cluster** で、次の項目を入力して **Next** をクリックします。
 
-   - **Cluster for virtual desktops** - *Your assigned cluster*
+   - **Cluster for virtual desktops** - *割り当てられているクラスター*
    - **Network for virtual desktops** - Primary
    - **Cloud account name** - *Initials*\ -\ *Cluster-Name*
 
@@ -188,40 +186,43 @@ Configuring the CCA
 
    .. note::
 
-      You do not need to select **Enable enterprise profiles and personal drives** as this feature will not be used in the following exercises.
+      **Enable enterprise profiles and personal drives** は演習では使用しないので選択する必要はありません。
 
-#. Under **Define Instance Types**, edit the existing profile name to **AHV 2vCPU 4GB** to better reflect the configuration. Add an additional custom **Instance Type**. Click **Next**.
+#. **Define Instance Types** で、既存のプロファイルを **AHV 2vCPU 4GB** に編集します。さらに図のように **Instance Type** を追加します。 **Next** をクリックします。
+   インスタンスタイプは、アプリケーションを実行するために起動されるVM構成です。パブリッククラウド環境では、そのクラウドプロバイダーで利用可能なインスタンスタイプ（AWS t.2largeなど）にマッピングされます。
 
-   An Instance Type is the VM configuration which will be launched to run applications. In public cloud environments, these map to that cloud providers available instance types (e.g. AWS t.2large).
 
    .. figure:: images/6.png
 
-#. Under **Select Sandbox Templates**, your *Initials*\ **-GoldImage** VM should automatically appear based on the **MasterTemplate** category value previously applied. Select the VM and specify **Windows 10** from the **OS** drop down. Click **Next**.
+#. **Select Sandbox Templates** で *Initials*\ **-GoldImage** VMが表示されます。 **OS** ドロップダウンから **Windows 10** を指定します。 **Next** をクリックします。
 
    .. figure:: images/7.png
 
-#. The final step is to link your local infrastructure to the hosted Frame backplane. Under **Connect to Frame**, select **Sign in with My Nutanix** and provide your My Nutanix credentials if prompted. Once logged in, select the pre-created **nutanix.com Customer** and click **Finish**.
+#. 最後のステップでは、オンプレミスのAHVを提供されたFrameバックプレーンに接続します。 **Connect to Frame** を選択して **My Nutanixでサインイン** します。ログイン後、事前に作成された **nutanix.com Customer** を選択し **Finish**　をクリックします。
 
    .. figure:: images/8.png
 
    .. note::
 
-      At this time, you cannot make any configuration changes to the Cloud Connector Appliance after it has been connected to the cluster. This functionality is being introduced in an upcoming release.
+      現時点では、クラスターに接続した後は、Cloud Connector Applianceの構成を変更することはできません。
+      
 
-#. Click **Go to Frame** to be redirected to the Xi Frame portal. Select **Organizations** from the left hand menu, and click :fa:`ellipsis-v` **> Cloud Accounts** to view the AHV Cloud Account creation status.
+#. **Go to Frame** をクリックして、Xi Frameポータルにリダイレクトします。左側のメニューから **Organizations** を選択し :fa:`ellipsis-v` **> Cloud Accounts** をクリックして、AHVクラウドアカウントの作成ステータスを表示します。
 
    .. figure:: images/9.png
 
    .. note::
 
-      Click **Add Cloud Account** to see the wizard one would follow to add additional AWS, Azure, and GCP resources, all capable of being managed from the same Xi Frame portal.
+      **Add Cloud Account** をクリックして、追加のAWS、Azure、およびGCPリソースを追加するためのウィザードを表示します。これらはすべて同じXi Frameポータルから一括管理できます。
 
-   The **C** status indicates that the account is still being created. Prism Central will provision a Workload Proxy VM (**frame-workload-proxy-####**) in the desktop VLAN specified during CCA configuration. Once the status changes to **R**, indicating the workload proxy has been successfully provisioned, continue to the next exercise.
+　ステータス **C** は、アカウントの作成中であることを示しています。
+  Prism Centralは、CCA構成中に指定されたデスクトップVLANにワークロードプロキシVM
+ (**frame-workload-proxy-####**) をプロビジョニングします。ステータスが **R** に変わると正常にプロビジョニングされています。確認後、次の演習に進みます。
 
    .. figure:: images/10.png
 
    .. note::
 
-      You may need to refresh your browser.
+      ブラウザのページ更新が必要となる場合があります。
 
-   You're now ready to begin provisioning AHV hosted desktops with Frame!
+   これで、Frameを使用してAHV上のデスクトップのプロビジョニングを開始する準備ができました！
