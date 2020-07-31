@@ -1,163 +1,161 @@
 .. _frameflow_secure_desktops:
 
 ---------------------------
-Securing Desktops with Flow
+Flowによるデスクトップの保護
 ---------------------------
 
-Flow application security policies can prevent VMs from communicating with each other while still allowing inbound and outbound access. This is perfect for applications such as web servers, or even desktops, where preventing the spread of VM to VM traffic is critical to stop attacks.
+Flowのセキュリティポリシーは、VMが相互に通信することを防ぎながら、インバウンドおよびアウトバウンドアクセスを許可、制限することができます。また、攻撃から防御するためにVM間のトラフィックの拡散を防止することが重要となるWebサーバーやデスクトップなどのアプリケーションに最適です。
 
-**In this task we will place desktop VMs into an application policy as part of an application tier that restricts VM to VM communication within the tier. The desktops will have normal inbound and outbound access, but traffic between desktops will be blocked.**
+**このラボでは、デスクトップVMにアプリケーションポリシーに適用し、デスクトップは通常の受信トラフィックおよび送信トラフィックがありますが、デスクトップ間のトラフィックはブロックするようにします。**
 
 Categorizing the Desktop VMs
 ++++++++++++++++++++++++++++
 
-#. In **Prism Central**, select :fa:`bars` **> Virtual Infrastructure > Categories**.
+#. **Prism Central** から :fa:`bars` **> Virtual Infrastructure > Categories** を選択します。
 
-#. Select the checkbox for **AppType** and click **Actions > Update**.
+#. **AppType** のチェックボックスを選択し **Actions > Update** をクリックします。
 
    .. figure:: images/1.png
 
-#. Click the :fa:`plus-circle` icon beside the last value to add an additional Category value.
+#. :fa:`plus-circle` アイコンをクリックして、カテゴリ値を追加します。
 
-#. Specify *Initials*-**FrameDesktops**  as the value name.
+#. 値として *Initials*-**FrameDesktops** とします。
 
    .. figure:: images/2.png
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-#. Select the checkbox for **AppTier** and click **Actions > Update**.
+#. **AppTier** のチェックボックスを選択し **Actions > Update** をクリックします。
 
-#. Click the :fa:`plus-circle` icon beside the last value to add an additional Category value.
+#. :fa:`plus-circle` アイコンをクリックして、カテゴリ値を追加します.
 
-#. Specify *Initials*-**Frame-W10NP** value name.
+#. *Initials*-**Frame-W10NP** の値を入力します。
 
    .. figure:: images/3.png
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-   Next we need to ensure all of our Frame desktops are running for testing. We also need to determine which **frame-instance-prod...** VMs in **Prism Central** correspond to your environment.
+   次に、すべてのFrameデスクトップがテスト用に実行されていることを確認する必要があります。また **Prism Central** 内のどの **frame-instance-prod...** VMが環境に対応するのか決定する必要があります。
 
-#. Return to the Frame Admin Portal. Select **Capacity** from the sidebar and increase your **Minimum number of instances** to **3** and click **Save**. This will ensure all 3 VMs are booted once the new image is published.
+#. Frame管理ポータルのサイドバーから **Capacity** を選択し **Minimum number of instances** を **3** に増やして **Save** をクリックします。これにより、新しいイメージが公開されると、3つすべてのVMが確実に起動されます。
 
    .. figure:: images/3g.png
 
    .. note::
 
-      Depending on your prior configuration, you may need to decrease **Buffer instances** to **0**.
+      後世によっては**Buffer instances** to **0** に減らす場合もあります。
 
-#. Select **Status** from the sidebar and copy the **Machine ID** for your **Sandbox** VM.
+#. サイドバーから **Status** を選択し、**Sandbox** VMの **Machine ID** をコピーします。
 
    .. figure:: images/3c.png
 
-#. In **Prism Central > Virtual Infrastructure > VMs**, paste the **Machine ID** into the **Name** filter to identify your Sandbox VM.
+#. **Prism Central > Virtual Infrastructure > VMs** から、対象のサンドボックスを特定するために **Machine ID** でフィルタリングします。
 
    .. figure:: images/3d.png
 
-#. Select the VM and click **Actions > Manage Categories**. Copy the **FrameAccountID** value that corresponds to your Frame account. Click **Cancel**
+#. VMを選択し **Actions > Manage Categories** をクリックします。Frameアカウントに対応する **FrameAccountID** の値をコピーします。 **Cancel** をクリックします。
 
    .. figure:: images/3h.png
 
-#. In **Prism Central > Virtual Infrastructure > VMs**, paste the **FrameAccountID** into the **Category** filter to identify your Frame VMs. Select all of your **frame-instance-prod...** VMs and click **Actions > Manage Categories**.
+#. **Prism Central > Virtual Infrastructure > VMs** から **Category** の **FrameAccountID** でフィルターして、対象のFrame VMを抽出します。 **frame-instance-prod...** VMを全て選択し **Actions > Manage Categories** をクリックします。
 
    .. figure:: images/3i.png
 
-#. Specify **AppType:**\ *Initials*\ **-FrameDesktops** in the search bar.
+#. 検索バーで **AppType:**\ *Initials*\ **-FrameDesktops** を指定します。
 
-#. Click the :fa:`plus-circle` icon beside the last value to add **AppTier:**\ *Initials*\ **-Frame-W10NP** and click the **Save**.
+#. :fa:`plus-circle` アイコンをクリックして、 **AppTier:**\ *Initials*\ **-Frame-W10NP** を追加して **Save** をクリックします。
 
    .. figure:: images/3j.png
 
-Creating a Desktop Security Policy
+デスクトップセキュリティポリシーの作成
 ++++++++++++++++++++++++++++++++++
 
-#. In **Prism Central**, select :fa:`bars` **> Policies > Security Policies**.
+#. **Prism Central** から :fa:`bars` **> Policies > Security Policies** を選択します。
 
-#. Click **Create Security Policy > Secure Applications (App Policy) > Create**.
+#. **Create Security Policy > Secure Applications (App Policy) > Create** をクリックします。
 
-#. Fill out the following fields:
+#. 次の項目を入力します。
 
    - **Name** - *Initials*-FrameDesktops
    - **Purpose** - Restrict unnecessary traffic between Frame desktops
    - **Secure this app** - AppType: *Initials*-FrameDesktops
-   - Do **NOT** select **Filter the app type by category**.
+   - **Filter the app type by category** は **選択しない** で下さい。
 
    .. figure:: images/6.png
 
-#. Click **Next**.
+#. **Next** をクリックします。
 
-#. If prompted, click **OK, Got it!** on the tutorial diagram of the **Create App Security Policy** wizard.
+#. **Create App Security Policy** ウィザードでメッセージが表示されたら **OK** をクリックします。
 
-#. To allow for more granular configuration of the security policy, click **Set rules on App Tiers, instead** rather than applying the same rules to all desktop groups.
+#. セキュリティポリシーをより詳細に構成できるようにするには、すべてのデスクトップグループに同じルールを適用するのではなく **Set rules on App Tiers, instead** をクリックします。
 
    .. figure:: images/7.png
 
-#. Click **+ Add Tier**.
+#. **+ Add Tier** をクリックします。
 
-#. Select **AppTier:**\ *Initials*-**Frame-W10NP** from the drop down.
+#. ドリップダウンから **AppTier:**\ *Initials*-**Frame-W10NP** を選択します。
 
-#. Repeat Steps 7-8 for **AppTier:Default**.
+#. **AppTier:Default** に対して、手順7〜8を繰り返します。
 
    .. figure:: images/8.png
 
-   Next you will define the **Inbound** rules, which control which sources you will allow to communicate with your application. In this case we want to allow all inbound traffic.
+   次に アプリケーションとの通信を制御する **Inbound** を定義します。この場合、すべての受信トラフィックを許可します。
 
-#. On the left side of the policy edit page, change **Inbound** from **Whitelist Only** to **Allow All**
+#. ポリシー編集ページの左側から **Inbound** を **Whitelist Only** から **Allow All** に変更します。
 
    .. figure:: images/9.png
 
-#. Repeat the previous step to also change **Outbound** to **Allow All**.
+#. 前の手順を繰り返し **Outbound** を **Allow All** に変更します。
 
-#. To define intra-desktop communication, click **Set Rules within App**.
+#. デスクトップ間通信を定義するには **Set Rules within App** をクリックします。
 
    .. figure:: images/10.png
 
-#. Click **AppTier:**\ *Initials*\ **-Frame-W10NP** and select **No** to prevent communication between VMs in this tier. This will block desktops from communicating with each other.
-
+#. **AppTier:**\ *Initials*\ **-Frame-W10NP** をクリックし **No** を選択して、このTierのVM間の通信を禁止します。これにより、デスクトップ間の通信がブロックされます。
    .. figure:: images/11.png
 
-#. While **AppTier:**\ *Initials*-**PD** is still selected, click the :fa:`plus-circle` icon to the right of **AppTier:Default** to create a tier to tier rule.
+#. 一方で **AppTier:**\ *Initials*-**PD** がまだ選択されていますので **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
 
-#. Fill out the following fields to allow communication on TCP port **7680** between the Frame desktops and VMs in the **Default** tiers to allow peer-to-peer Windows updates:
-
+#. 次の項目を入力して、Frameデスクトップと **Default** のVM間のTCPポート **7680** での通信を許可し、ピアツーピアでのWindows更新を許可します。
    - **Protocol** - TCP
    - **Ports** - 7680
 
    .. figure:: images/12.png
 
-#. Click **Save**.
+#. **Save** をクリックします。
 
-#. Click **Next** to review the security policy.
+#. **Next** をクリックして、セキュリティポリシーを確認します。
 
-#. Click **Save and Monitor** to save the policy.
+#. **Save and Monitor** をクリックして、ポリシーを保存します。
 
-Verifying Desktop Security
-++++++++++++++++++++++++++
+デスクトップのセキュリティポリシーの確認
+++++++++++++++++++++++++++++++++
 
-#. Return to the Frame Admin Portal. Select **Status** from the sidebar and note the **Private IP** addresses of your desktop VMs.
+#. Frame管理ポータルに戻ります。サイドバーから **Status** を選択し、デスクトップVMの **Private IP** をメモします。
 
    .. figure:: images/12a.png
 
-#. Click **Launchpad** and log into your Frame **Desktop**.
+#. **Launchpad** をクリックして、 Frame **Desktop** にログインします。
 
-#. Within the desktop, open a **Command Prompt** and run ``ping -t ANOTHER-FRAME-VM-IP`` to verify connectivity between the persistent desktops.
+#. デスクトップ内で **Command Prompt** を開き、 ``ping -t ANOTHER-FRAME-VM-IP`` にてデスクトップ間の通信を確認します。
 
    .. figure:: images/13.png
 
-   Can you ping between the desktops now? Why?
+   デスクトップ間でpingできますか？なぜですか？
 
-#. In **Prism Central > Policies > Security Policies**, select the *Initials*\ **-FrameDesktops** policy.
+#. **Prism Central > Policies > Security Policies** から *Initials*\ **-FrameDesktops** ポリシーを選択します。
 
-#. Click **Actions > Apply**.
+#. **Actions > Apply** をクリックします。
 
    .. figure:: images/14.png
 
-#. Type **APPLY** and click **OK** to apply the Desktop security policy.
+#. **APPLY** を選択し **OK** をクリックして、デスクトップセキュリティポリシーを適用します。
 
-   What happens to the continuous ping between the desktops?
+   デスクトップ間の継続的なpingはどうなりますか？
 
-Takeaways
+この章のまとめ
 +++++++++
 
-- Application policies can be used to protect virtual infrastructure like desktops, as well as traditional applications.
-- In this exercise you utilized Flow to block traffic between desktops, a simple policy that can be implemented to prevent unneeded access between desktop VMs and assist with preventing the spread of malware on a network.
-- Monitor mode is used to visualize traffic to the defined application, but Apply mode enforces the policy.
+- アプリケーションポリシーを使用すると、デスクトップなどの仮想インフラストラクチャーやアプリケーションを保護できます。
+- この演習では、フローを使用してデスクトップ間のトラフィックをブロックしました。これは、デスクトップVM間の不要なアクセスを防止し、ネットワーク上のマルウェアの拡散を防止するために実装できる簡単なポリシーです。
+- 監視モードは、定義されたアプリケーションへのトラフィックを視覚化するために使用されますが、適用モードはポリシーを適用します。

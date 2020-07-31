@@ -1,19 +1,19 @@
 .. _framerightsize:
 
 ------------------------------------
-Right-sizing Desktops with Prism Ops
+Prism Opsを使用したデスクトップの適切なサイズ設定
 ------------------------------------
 
 .. figure:: images/operationstriangle.png
 
-Prism Ops brings smart automation to our customer’s daily IT operations. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Ops mirrors traditional IT Admin's workflows to improve operations efficiency. With Prism Ops, IT Admins are able to connect insights from machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+Prism Opsは、お客様の日常のIT運用において、スマートな自動化をもたらします。典型的な運用業務は、監視、分析、アクションの継続的なサイクルです。Prism Opsは、従来のIT管理者の運用業務を効率化します。Prism Opsを使用すると、IT管理者は機械学習エンジンX-FITおよびX-Play自動化エンジンの機能を使用し、機械データを基にして日常の業務フローを自動化できます。
 
-In this lab you will learn how Prism Ops can help IT Admins monitor, analyze and automatically act when a VM's memory resource is constrained.
+このラボでは、仮想マシンのメモリリソースが制約されている場合に、PrismがIT管理者の監視、分析、および自動化にどのように役立つかを学習します。
 
-Lab Setup
+ラボのセットアップ
 +++++++++
 
-Please be sure to complete the `Building & Optimizing the Gold Image` lab as you will need to use the VM created there to complete this lab.
+このラボを完了するには、これまでのラボ手順で作成された仮想マシンを使用する必要があるため、必ずゴールドイメージの構築と最適化のラボを完了してください。
 
 #. Open your **Prism Central** and navigate to the **VMs** page. Note down the IP Address of the **GTSPrismOpsLabUtilityServer**. You will need to access this IP Address throughout this lab.
 

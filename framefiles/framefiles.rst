@@ -1,83 +1,81 @@
 .. _framefiles:
 
 ------------------------------
-Working with Files in Xi Frame
+Xi Frameでのファイル操作
 ------------------------------
 
-By default, sessions on Frame are *stateless* or *non-persistent*, which means that any changes you make to the C: drive will not persist on the virtual machine beyond your session. Any user files or settings are persisted separately.
+Xi Frameのセッション内のユーザー環境は、デフォルトでは *システムの内容を保持しない非永続的* な環境です。つまり、C:ドライブの変更内容は、そのセッション内でのみ仮想デスクトップに保持されます。ユーザーファイルや設定はファイルサーバーなどに個別に保持されます。
 
-**In this lab, you'll explore options for how to work with your own files in a Frame environment.**
+**このラボでは、Frame環境でのファイル操作ついて学びます。**
 
-Uploading and Downloading
+アップロードとダウンロード
 +++++++++++++++++++++++++
 
-Moving files in and out of your cloud hosted desktop, if allowed based on administrative policy, is quick and easy.
+管理者によるポリシーで許可されている場合、Frameのデスクトップとローカルとの間で簡単に素早くファイルを移動させることができます。
 
-#. From the **Xi Frame** portal, click **Launchpad**.
+#. **Xi Frame** ポータルにて **Launchpad** ボタンをクリックします。
 
    .. figure:: images/1.png
 
-#. Launch a desktop from the **Desktop** Launchpad.
+#. **Launchpad** からデスクトップを起動します。
 
-#. In the group of icons on the right side of the status bar, click on the up arrow to upload a file. Alternatively, you can drag and drop any file onto the session window in your browser.
+#. ステータスバーの右側にあるアイコングループから上矢印の雲のアイコンをクリックして、ファイルをアップロードします。または、ブラウザのセッションウインドウにドラックアンドドロップすることもできます。
 
    .. figure:: images/2.png
 
-#. You can open the file from the **Uploads** folder found within the Frame Explorer.
+#. Frameのデスクトップ内のエクスプローラーの **Uploads** フォルダーからファイルを開くことができます。
 
    .. note::
 
-     If accessing the full desktop, the **Uploads** and **Download Now** folders can be found in ``C:\Users\Frame\``.
+     ``C:\Users\Frame\`` の中に **Uploads** と **Download Now** フォルダーを見つけることができます。
 
    .. figure:: images/old3.png
 
-#. To download a file from your Frame desktop, simply save the file to the **Download Now** folder and it will automatically download to your browser's default local downloads directory. Alternatively, you can right-click any file within File Explorer and select **Download with Frame**.
+#. Frameのデスクトップからファイルをダウンロードするには、ファイルを **Download Now** フォルダーに保存するだけでローカル側のダウンロードフォルダーに自動的にダウンロードされます。または、仮想デスクトップのエクスプローラー内の任意のファイルを右クリックして、 **Download with Frame** を選択してダウンロードすることもできます。
 
    .. figure:: images/4.png
 
-Using Cloud Storage
+クラウドストレージの利用
 +++++++++++++++++++
 
-Users can attach cloud storage accounts from Google Drive, Dropbox, OneDrive, or Box to the Frame desktop via a simple, one-time process initiated from the Launchpad.
+FrameのLaunchpad（ユーザーのFrameポータル画面）上で各クラウドストレージとの認証設定をしておくことで、仮想デスクトップからGoogleドライブ、Dropbox、OneDrive、またはBoxに再ログインなしでシンプルに接続できるようになります。
 
-#. Click :fa:`gear` **> Disconnnect > Disconnect** to temporarily disconnect from your session.
+#. セッションを一時切断するため、仮想デスクトップの右下にある:fa:`gear` **> Disconnnect > Disconnect** をクリックします。
 
-#. Select the **User Name** menu in the top, right-hand side of the Launchpad and click **Edit**.
+#. Launchpadの右上にある **User Name** メニューを選択し **Edit** をクリックします。
 
    .. figure:: images/5.png
 
-#. Under **Storage providers**, click **+** next to your preferred cloud storage solution and authorize Frame to access the account.
+#. **Storage providers** から任意のクラウドストレージの **+** をクリックして、Frameからアクセスできるようにアカウント認証を行ないます。
 
    .. figure:: images/6.png
 
-#. Return to your Launchpad and then **Resume** your disconnected session.
+#. 左上の **Go back** でLaunchpadに戻り **Resume** をクリックして、切断されたセッションを再開します。
 
-#. Open **Frame Explorer** and note your cloud storage has been automatically mounted as a network drive (e.g. F:, G:, etc.).
+#. Frameのデスクトップ内のエクスプローラーを開き、クラウドストレージがネットワークドライブ(例：G:ドライブ等)として自動的にマウントされていることを確認します。
 
    .. figure:: images/7.png
 
-#. Open a document from your cloud storage account.
+#. クラウドストレージからドキュメントを開きます。クラウドストレージがネットワークドライブとしてマウントされている場合、メタデータのみが同期されます。実ファイルは同期されません。ファイルを開くと、ファイルは一時的にFrameのセッションに転送されて使用されます。ファイルを保存すると、そのファイルはクラウドストレージに保存されます。
 
-   Only the metadata is synced when the cloud storage is mounted as a network drive. Files are not synced. When you open a file, the file is temporarily transferred to your Frame session for use. When you save a file, the file is saved to cloud storage.
-
-Using Nutanix Files
+Nunitx Filesの利用
 +++++++++++++++++++
 
-Similar to any on-premises Virtual Desktop solution, Nutanix Files is an excellent fit for providing easy to manage, scalable file services to host user profiles and data.
-
-With a WAN networking solution in place, such as VPN, VPC/VNet peering, Direct Connect, etc., even cloud-hosted Frame desktops can access corporate resources like Files shares.
+Nutanix Filesは仮想デスクトップソリューションで必要なユーザープロファイルとデータを管理することを容易に提供でき、スケーラブルなファイルサービスを提供するのに最適です。
+VPN、VPC/VNetピアリング、ダイレクトコネクトなどのWANネットワーキングソリューションを導入すると、
+クラウドサービスで提供されているFrameのデスクトップからファイル共有などの企業リソースにアクセスする仕組みを提供することができます。
 
    .. figure:: images/8.png
 
-Due to not having the Frame desktops integrated with Active Directory in this environment, you will leverage Files for a simple departmental share and explore Files Analytics.
+本環境ではFrameデスクトップがActive Directoryと連携されていないため、ファイルの単純な部門共有を行い、ファイル分析機能を有効にします。
 
-For the purposes of saving time and resources, a Nutanix Files instance has already been deployed to your cluster. For a quick overview on deploying Nutanix Files, click `here <http://youtube.com>`_.
+時間とリソース節約のため、Nutanix Filesインスタンスは既にクラスターにデプロイされています。Nunitax Filesのデプロイの概要については `ここ <http://youtube.com>`_をクリックして下さい。
 
-#. In **Prism Element > File Server > Share/Export**, click **+ Share/Export**.
+#. **Prism Element > File Server > Share/Export** から **+ Share/Export**をクリックします。
 
    .. figure:: images/9.png
 
-#. Under **Basic**, fill out the following fields and click **Next**:
+#. **Basic**タブにて次の項目をして、 **Next**をクリックします。
 
    - **Name** - *Initials*\ **-DepartmentShare**
    - **Description** - Fiesta Engineering Share
@@ -86,50 +84,53 @@ For the purposes of saving time and resources, a Nutanix Files instance has alre
 
    .. note::
 
-      As this environment leverages a single-node Files deployment, you are not given the option between **Standard** and **Distributed** share types. <Why are standard shares better for general purpose shares>
+      本環境では単一ノードでFilesインスタンスを展開するため、共有タイプ **Standard** と **Distributed** の選択はありません。
 
-#. Fill out the following fields and click **Next > Create**:
+#. 次の項目を入力して **Next > Create** を選択します。
 
-   - Select **Enable Access Based Enumeration (ABE)**
-   - Select **Self Service Restore**
+   - **Enable Access Based Enumeration (ABE)** を選択します。
+   - **Self Service Restore** を選択します。
 
    .. note::
 
-     Access Based Enumeration (ABE) is a Microsoft Windows (SMB protocol) feature which allows the users to view only the files and folders to which they have read access when browsing content on the file server.
+     アクセスベースの列挙（ABE）は、Microsoft Windows（SMBプロトコル）ユーザーはファイルサーバー上のコンテンツを参照するときに、読み取りアクセス権を持つファイルとフォルダーのみを表示できます。
 
-     Self Service Restore enabled support for Windows Previous Versions on an SMB share.
+     SMB共有でのWindowsの以前のバージョンのセルフサービスリストア機能をサポートしています。
 
-     Either of these features can be enabled/disabled on a per share basis.
+     これらの機能はどちらも、Shar/Exportした単位で有効/無効にできます。
 
-#. In **Prism Element > File Server > File Server**, select **BootcampFS** and click **Protect**.
+#. **Prism Element > File Server > File Server** から **BootcampFS** を選択し **Protect** をクリックします。
 
    .. figure:: images/10.png
 
-     Observe the default Self Service Restore schedules, this feature controls the snapshot schedule for Windows' Previous Versions functionality. Supporting Windows Previous Versions allows end users to roll back changes to files without engaging storage or backup administrators. Note these local snapshots do not protect the file server cluster from local failures and that replication of the entire file server cluster can be performed to remote Nutanix clusters.
+     デフォルトのセルフサービスリストアスケジュールを確認します。この機能は、Windowsの以前のバージョン機能のスナップショットスケジュールを制御します。Windowsの以前のバージョン機能をサポートすることで、エンドユーザーは、ストレージやバックアップの管理者に依頼することなく、ファイルの変更をロールバックできます。
 
-     .. note::
+        .. note::
 
-       To learn more about Files capabilities, including Quotas, Antivirus integration, monitoring, and more, see the `Nutanix Files Guide <https://portal.nutanix.com/#/page/docs/details?targetId=Files-v3_6:Files-v3_6>`_ on the Nutanix Portal.
+          クォータ、アンチウィルスソフト連携、モニタリングなどを含むFiles機能の詳細については `Nutanix Files Guide <https://portal.nutanix.com/#/page/docs/details?targetId=Files-v3_6:Files-v3_6>`_ をご覧下さい。
 
-#. From your Frame desktop, validate you can access ``\\BootcampFS.ntnxlab.local\Initials-DepartmentShare\`` from File Explorer. When prompted for credentials, authenticate using the following:
+#. Frameのデスクトップ内のエクスプローラーから ``\\BootcampFS.ntnxlab.local\Initials-DepartmentShare\`` にアクセスできることを確認します。資格情報の入力が求められたら、次の認証情報を入力します。
 
    - **User Name** - ntnxlab.local\\devuser01
    - **Password** - nutanix/4u
-   - Select **Remember my credentials**
+   - **Remember my credentials** を選択します。
 
-#. Open a browser within your Frame desktop and download sample data to populate in your share:
+#. Frameのデスクトップ内でブラウザーを開き、サンプルデータをダウンロードして共有フォルダーに配置します。
 
-   - **If using a PHX cluster** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
-   - **If using a RTP cluster** - http://10.55.251.38/workshop_staging/peer/SampleData_Small.zip
+   - **PHX clusterを使用している場合** - http://10.42.194.11/workshop_staging/peer/SampleData_Small.zip
+   - **RTP clusterを使用している場合** - http://10.55.251.38/workshop_staging/peer/SampleData_Small.zip
 
-#. Extract the contents of the zip file into your file share and open several files.
+#. zipファイルの内容を共有フォルダーに展開し、いくつかのファイルを開きます。
 
    .. figure:: images/11.png
 
-#. In **Prism Element > File Server**, select **BootcampFS** and click **File Analytics**.
+#. **Prism Element > File Server** から **BootcampFS** を選択し、 **File Analytics** をクリックします。
 
    .. figure:: images/12.png
 
-#. If prompted to **Enable File Analytics**, provide the NTNXLAB\\Administrator credentials and click **Enable**.
+#. **Enable File Analytics**（ファイル分析を有効にする）ように求められた場合は、NTNXLAB\\Administratorの資格情報を入力し、 **Enable**をクリックします。
 
    .. figure:: images/13.png
+
+
+**必要に応じて、ファイル分析機能を確認して下さい。Xi Frameのワークショップは以上となります。お疲れ様でした。**
