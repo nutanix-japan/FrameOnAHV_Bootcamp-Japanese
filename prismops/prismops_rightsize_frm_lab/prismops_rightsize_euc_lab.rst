@@ -6,106 +6,105 @@ Prism Opsを使用したデスクトップの適切なサイズ設定
 
 .. figure:: images/operationstriangle.png
 
-Prism Opsは、お客様の日常のIT運用において、スマートな自動化をもたらします。典型的な運用業務は、監視、分析、アクションの継続的なサイクルです。Prism Opsは、従来のIT管理者の運用業務を効率化します。Prism Opsを使用すると、IT管理者は機械学習エンジンX-FITおよびX-Play自動化エンジンの機能を使用し、機械データを基にして日常の業務フローを自動化できます。
+Prism Opsにより、監視、分析、アクションといったIT運用の業務サイクルをスマートに自動化することができます。Prism Opsを使用すると、IT管理者は機械学習エンジンX-FITおよび自動化エンジンX-Playの機能を使用できます。これにより、機械学習データを基にして日常の業務フローを自動化し、運用業務を効率化します。
 
-このラボでは、仮想マシンのメモリリソースが制約されている場合に、PrismがIT管理者の監視、分析、および自動化にどのように役立つかを学習します。
+この演習では、仮想マシンのメモリーリソースが制限されている場合に、PrismがIT管理者の監視、分析、および自動化にどのように役立つかを学習します。
 
 ラボのセットアップ
-+++++++++
+++++++++++++++++
 
-このラボを完了するには、これまでのラボ手順で作成された仮想マシンを使用する必要があるため、必ずゴールドイメージの構築と最適化のラボを完了してください。
+この演習を完了するには、これまでの演習手順で作成された仮想マシンを使用する必要があるため、必ずゴールドイメージの構築と最適化の演習を完了してください。
 
-#. Open your **Prism Central** and navigate to the **VMs** page. Note down the IP Address of the **GTSPrismOpsLabUtilityServer**. You will need to access this IP Address throughout this lab.
+#. **Prism Central** を開き **VMs** ページに移動します。**GTSPrismOpsLabUtilityServer** のIPアドレスをメモします。
 
    .. figure:: images/init1.png
 
-#. Open a new tab in the browser, and navigate to http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts [example http://10.42.113.52/alerts]. It is possible you may need to log into the VM if you are the first one to use it. Just fill out the **Prism Central IP**, **Username** and **Password** and click **Login**.
+#. ブラウザーで新しいタブを開き http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts [example http://10.42.113.52/alerts] に移動します。VMを初めて使用する場合は、VMにログインする必要がある場合があります。 **Prism Central IP**、 **Username** と **Password** 入力して **Login** をクリックします。
 
    .. figure:: images/init2.png
 
-#. Once you have landed on the alerts page, leave the tab open. It will be used in a later portion of this lab.
+#. アラート設定ページにアクセスしたら、タブを開いたままにします。この演習の後半で使用します。
 
    .. figure:: images/init2b.png
 
-#. In a separate tab, navigate to http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ to complete the lab from [example http://10.42.113.52/]. Use the UI at this URL to complete the lab.
+#. 別のタブで http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ [example http://10.42.113.52/] にアクセスして、このUIで演習を完了させます。
 
    .. figure:: images/init3.png
 
-Inefficiency Detection with Prism Ops X-FIT
+Prism OpsのX-FITによる非効率なリソースの検出
 +++++++++++++++++++++++++++++++++++++++++++
 
-Prism Ops uses X-FIT machine learning to detect and monitor the behaviors of VMs running within the managed clusters.
+Prism Opsは機械学習X-FITを使用して、クラスター内で実行されているVMの動作を検出および監視します。
 
-Using machine learning, Prism Ops then analyzes the data and applies a classification to VMs that are learned to be inefficient. The following are short descriptions of the different classifications:
+また、Prism Opsは機械学習を使用してデータを分析し、非効率であると学習されたVMを以下の分類を適用します。
 
-  * **Overprovisioned:** VMs identified as using minimal amounts of assigned resources.
-  * **Inactive:** VMs that have been powered off for a period of time or that are running VMs that do not consume any CPU, memory, or I/O resources.
-  * **Constrained:** VMs that could see improved performance with additional resources.
-  * **Bully:** VMs identified as using an abundance of resources and affecting other VMs.
+  * **Overprovisioned:** 割り当てられたリソースの最小量を使用していると特定されたVM
+  * **Inactive:** 一定期間電源がオフになっているVM、またはCPU、メモリー、またはI/Oリソースを消費しない状態と特定されたVM
+  * **Constrained:** リソースの追加でパフォーマンスが向上する可能性があると特定されたVM
+  * **Bully:** リソースを豊富に使用しており、他のVMに影響を与えていると特定されたVM
 
-#. In **Prism Central**, select :fa:`bars` **> Dashboard** (if not already there).
+#. **Prism Central** から :fa:`bars` **> Dashboard** に移動します。
 
-#. From the Dashboard, take a look at the VM Efficiency widget. This widget gives a summary of inefficient VMs that Prism Ops’s X-FIT machine learning has detected in your environment. Click on the ‘View All Inefficeint VMs’ link at the bottom of the widget to take a closer look.
+#. ダッシュボードのVM Efficiencyウィジェットを確認します。このウィジェットは、Prism Opsの機械学習X-FITがクラスター内で検出した非効率的なVM数を表示します。ウィジェットの下部にある View All Inefficeint VMsリンクをクリックして詳細を確認します。
 
    .. figure:: images/ppro_58.png
 
-#. You are now viewing the Efficiency focus in the VMs list view with more details about why Prism Ops flagged these VMs. You can hover the text in the Efficiency detail column to view the full description.
+#. Prism OpsがこれらのVMを検知した理由について表示されています。リストビューのいずれかを選択して、Efficiency Detail 列のテキストにカーソルを合わせると説明全体が表示されます。
 
    .. figure:: images/ppro_59.png
 
-#. Once an admin has examined the list of VM on the efficiency list they can determine any that they wish to take action against. From VMs that have too many or too little resources they will require the individual VMs to be resized. This can be done in a number of ways with a few examples listed below:
+#. 管理者は、リソースの効率に関するVMのリストを確認することができます。リソースが多すぎる、または少なすぎるVMでは、個々のVMのリソースサイズを変更する場合があります。以下に示すいくつかの方法で実行リソースの変更を実行できます。
 
-   * **Manually:** An admin edits the VM configuration via Prism or vCenter for ESXi VMs and changes the assigned resources.
-   * **X-Play:** Use X-Plays automated play books to resize VM(s) automatically via a trigger or admins direction. There will be a lab story example of this later in this lab.
-   * **Automation:** Use some other method of automation such as powershell or REST-API to resize a VM.
+   * **Manually:** 管理者は、PrismまたはESXiの場合はvCenterを介してVM構成を編集し、割り当てられたリソースを変更します。
+   * **X-Play:** X-Playの自動プレイブックを使用して、トリガーなどによりVMのサイズを自動的に変更します。この演習の後半で実際に演習を行ないます。
+   * **Automation:** PowerShellやREST-APIなどによる自動化を使用して、VMのサイズを変更します。
 
+   Prism Opsは、この機械学習データを使用して、VM、ホスト、およびクラスターのメトリックデータのベースラインまたは予想範囲を生成することもできます。X-FITアルゴリズムは、これらのエンティティの通常の動作を学習し、それをさまざまなグラフで表すことができます。メトリック値がこの予想範囲から逸脱すると、Prism Opsは異常を発生させます。
 
-   Using this machine learning data, Prism Ops is also able to generate baselines, or expected ranges, for VM, Host and Cluster metric data. The X-FIT alogrithms learn the normal behavior of these entities and represent that as a baseline range on the different charts. Whenever a metric value deviates from this expected range, Prism Ops will raise an anomaly.
-
-#. Now let's take a take a look at a VM by searching for ‘bootcamp_good’ and selecting ‘bootcamp_good_1’.
+#. 次に「bootcamp_good」でキーワード検索をして bootcamp_good_1 を選択し、VMを見てみましょう。
 
    .. figure:: images/ppro_61.png
 
-#. Go to Metrics > CPU Usage. Notice a dark blue line, and a lighter blue area around it. The dark blue line is the CPU Usage. The light blue area is the expected CPU Usage range for this VM. This particular VM is running an application that is upgraded at the same time each day, which explains the usage pattern. Notice that X-FIT detects the seasonality in this usage pattern and has adjusted the expected range accordingly. In this case, an anomaly has been raised for this VM, because the Usage is far above the expected range. You can also reduce the time range “Last 24 hours” to examine the chart more closely.
+#. メトリック > CPU使用率 に移動します。青色の線と、その周りの水色の領域に注目してください。青色の線はCPU使用率です。水色の領域は、このVMの予想されるCPU使用率の範囲です。この特定のVMは、毎日同時刻にアップグレードされるアプリケーションを実行しているという使用パターンを説明しています。X-FITがこの使用パターンから周期を検出し、それに応じて予想範囲を予想したことを理解してください。この場合、使用量が予想範囲をはるかに超えているため、このVMに異常が発生しています。また「過去24時間」から、さらに時間範囲を短くして、グラフをさらに詳しく調べることもできます。
 
    .. figure:: images/ppro_60.png
 
-#. Click **“Alert Setting”** to set an alert policy for this kind of situation.
+#. このような状況の場合に、アラートポリシーを設定したい場合には **“Alert Setting”** をクリックします。
 
-#. In the right hand side, you can change some of the configurations however you would like. In this example I have changed the Behavioral Anomaly threshold to ignore anomalies between 10% and 70%. All other anomalies will generate a Warning alert. I have also adjusted the Static threshold to Alert Critical if the CPU Usage on this VM exceeds 95%.
+#. 必要に応じて一部の構成を変更できます。この例では、行動異常のしきい値を変更して、10％から70％の異常値は無視されます。それ以外の異常値の場合は警告アラートを通知するように設定されています。このVMのCPU使用率が95％を超えた場合は、静的しきい値をアラートクリティカルよして設定しています。
 
    .. figure:: images/ppro_25.png
 
-#. Hit **Cancel** to exit the policy creation workflow.
+#. **Cancel** をクリックして、ポリシー作成を終了します。
 
-Automatically Increase Constrained VM Memory with X-Play
+X-PlayによりVMメモリーを自動的に増やす
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now let's look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory and will show how we can automatically remediate the right sizing of this VM. We will also use a custom Ticket system to give an idea of how this typical workflow could integrate with ticketing system such as Service Now.
+次に、これらの非効率性のいくつかを解決するために自動化されたアクションを実行する方法を見てみましょう。この演習では、VMが利用できるメモリーが制限されていると想定し、このVMの適切なサイズを自動的に変更する方法を示します。また、カスタムチケットシステムを使用して、典型的な運用業務がService Nowなどのチケットシステムとどのように統合できるかを説明します。
 
-#. In **Prism Central**, select one of your desktop VMs provisioned as part of the previous labs. The examples will use a VM called **ABC - VM**.
+#. **Prism Central** から 演習でプロビジョニングされたVMのいずれかを選択します。この例では **ABC - VM** というVMを使用します。
 
    .. note::
 
-      You can use the Frame **Status** page to find the **Machine ID** of your **Production** desktop VMs and then filter in **Prism Central** based on the associated **Machine ID**.
+      Frameの管理ポータルの **Status** ページを使用して **Production** デスクトップVMの **Machine ID** を検索し、関連する **Machine ID** を **Prism Central** でフィルタリングできます。
 
    .. figure:: images/rs1.png
 
-#. Note the current **Memory Capacity** of the VM, as we will later increase it with X-Play. You may need to scroll down within the **Properties** widget to find this value.
+#. 後でX-Playを使用してメモリーを増加させるため、VMの現在の **メモリーサイズ** を確認しておいてください。この値を確認するためには **Properties** ウィジェット内を下にスクロールする必要がある場合があります。
 
    .. figure:: images/rs2.png
 
-#. Navigate to the **Action Gallery** using the search bar.
+#. 検索バーを使用して **Action Gallery** に移動します。
 
    .. figure:: images/rs3.png
 
-#. Select the **REST API** action and choose the **Clone** operation from the actions menu.
+#. リストから **REST API** を選択します。actions menuから **Clone** をクリックします。
 
    .. figure:: images/rs4.png
 
-#. We are creating an Action that we can later use in our playbook to Generate a Service Ticket. Fill in the following values replacing your initials in the *Initials* part, and the <GTSPrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. Click **Copy**.
+#. プレイブックで使用してサービスチケットを生成できるアクションが作成されています。*Initials* に次のように入力し、URLフィールドに <GTSPrismOpsLabUtilityServer_IP_ADDRESS> を入力します。 **Copy** をクリックします。
 
-   - **Name:** *Initials* - Generate Service Ticket
+   - **Name:** *Initials* - サービスチケットの生成
    - **Method:** POST
    - **URL:** http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/generate_ticket/
    - **Request Body:** ``{"vm_name":"{{trigger[0].source_entity_info.name}}","vm_id":"{{trigger[0].source_entity_info.uuid}}","alert_name":"{{trigger[0].alert_entity_info.name}}","alert_id":"{{trigger[0].alert_entity_info.uuid}}"}``
@@ -113,79 +112,79 @@ Now let's look at how we can take automated action to resolve some of these inef
 
    .. figure:: images/rs5.png
 
-#. Use the search bar to navigate to **Playbooks**.
+#. 検索バーを使用して **Playbooks** に移動します。
 
    .. figure:: images/rs6.png
 
-#. Now we will create a Playbook to automate the generation of a service ticket. Click **Create Playbook** at the top of the table view.
+#. 次に、サービスチケットの生成を自動化するプレイブックを作成します。テーブルビューの上部にある **Create Playbook** をクリックします。
 
    .. figure:: images/rs7.png
 
-#. Select **Alert** as a trigger
+#. トリガー設定のため **Alert** を選択します。
 
    .. figure:: images/rs8.png
 
-#. Search and select **VM {vm_name} Memory Constrained** as the alert policy, since this is the issue we are looking to take automated steps to remediate.
+#. 自動化されたメモリーの変更を実行するため、アラートポリシーとして **VM {vm_name} Memory Constrained** を検索して選択します。
 
    .. figure:: images/rs9.png
 
-#. Select the *Specify VMs* radio button and choose the VM you created for the lab. This will make it so only alerts raised on your VM will trigger this Playbook.
+#. *Specify VMs* ラジオボタンを選択し、演習用に作成したVMを選択します。これにより、VMで発生したアラートのみがこのハンドブックをトリガーします。
 
    .. figure:: images/rs10.png
 
-#. First, we would like to generate a ticket for this alert. Click **Add Action** on the left side and select the **Generate Service Ticket** action you created. Note: For the lab we set up our own ticketing sytem to illustrate the full workflow, but you can see there is also an out of box Service Now action which can achieve the same worfklow, specifically for Service Now.
+#. まず、このアラートのチケットを生成します。左側の **Add Action** をクリックし **Generate Service Ticket** を選択します。注：演習では、完全なワークフローを説明するために独自の発券システムをセットアップしましたが、Service Nowに対しては、すぐに使えるService Nowアクションもあります。
 
    .. figure:: images/rs11.png
 
-#. Notice the details from the **Generate Service Ticket** Action you created are automatically filled in for you.
+#. 作成した **Generate Service Ticket** アクションの生成の詳細が自動的に入力されることを確認してください。
 
    .. figure:: images/rs12.png
 
-#. Next we would like to notify someone that the ticket was created by X-Play. Click **Add Action** and select the Email action. Fill in the field in the email action. Here are the examples. Be sure to replace <GTSPrismOpsLabUtilityServer_IP_ADDRESS> in the message with it's IP Address.
+#. 次に、チケットがX-Playによって作成されたことを通知します。 **Add Action** をクリックして、Emailのアクションを選択します。Emailアクションの以下の項目を入力します。次に例を示します。Messageの <GTSPrismOpsLabUtilityServer_IP_ADDRESS> をIPアドレスに置き換えてください。
 
-   - **Recipient:** - Fill in your email address.
+   - **Recipient:** - ご自身のメールアドレスを入力します。
    - **Subject :** - ``Service Ticket Pending Approval: {{trigger[0].alert_entity_info.name}}``
    - **Message:** - ``The alert {{trigger[0].alert_entity_info.name}} triggered Playbook {{playbook.playbook_name}} and has generated a Service ticket for the VM: {{trigger[0].source_entity_info.name}} which is now pending your approval. A ticket has been generated for you to take action on at http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/ticketsystem``
 
    .. figure:: images/rs13.png
 
-#. Click **Save & Close** button and save it with a name “*Initials* - Generate Service Ticket for Constrained VM”. **Be sure to enable the ‘Enabled’ toggle.**
+#. **Save & Close** ボタンをクリックし “*Initials* - Generate Service Ticket for Constrained VM”. という名前で保存します。 **必ず ‘Enabled’ トグルを有効にしてください。**
 
    .. figure:: images/rs14.png
 
-#. Now we will create one more Playbook. This one will be what we call when we resolve the service ticket, which should add memory to the affected VM and send an email. Click **Create Playbook** at the top of the table view.
+#. 次に、もう1つのプレイブックを作成します。これは、サービスチケットを解決するときに呼び出すものであり、影響を受けるVMにメモリーを追加してメールを送信する必要があります。テーブルビューの上部にある **Create Playbook** をクリックします。
 
    .. figure:: images/rs15.png
 
-#. Select **Manual** as the trigger. Note: The ticket system we have constructed for this lab will call the trigger API provided by manual trigger, however this API is not public. In 5.17, we are introducing a Webhook Trigger which will expose a public API that allows achieving this same behavior. Tools like Service Now, can use this Webhook to call back into Prism Central and trigger a playbook.
+#. トリガーとして **Manual** を選択します。注：この演習用に作成したチケットシステムは、手動トリガーによって提供されるトリガーAPIを呼び出しますが、このAPIは公開されていません。5.17では、これと同じ動作を実現できるパブリックAPIを公開するWebhook Triggerを導入しています。Service Nowなどのツールは、このWebhookを使用してPrism Centralにコールバックし、プレイブックをトリガーできます。
 
    .. figure:: images/rs16.png
 
-#. Select the **VM** entity type from the dropdown, as this playbook will be applied to VMs.
+#. このプレイブックはVMに適用されるため、ドロップダウンから **VM** エンティティタイプを選択します。
 
    .. figure:: images/rs17.png
 
-#. Click **Add Action** on the left side and select the **VM Add Memory** action.
+#. 左側 **Add Action** をクリックし、VMの **VM Add Memory** アクションを選択します。
 
    .. figure:: images/rs18.png
 
-#. Set the empty fields according to the screen below. Next we would like to notify someone that an automated action was taken. Click **Add Action** to add the email action
+#. 以下の画面に従って空欄を設定してください。次に、自動アクションが実行されたことを誰かに通知します。 **Add Action** クリックしてメールアクションを追加します。
 
    .. figure:: images/rs19.png
 
-#. Fill in the field in the email action. Here are the examples.
+#. メールアクションのフィールドに入力します。次に例を示します。
 
-   - **Recipient:** - Fill in your email address.
+   - **Recipient:** - メールアドレスを入力します。
    - **Subject :** - ``Playbook {{playbook.playbook_name}} was executed.``
    - **Message:**``{{playbook.playbook_name}} has run and has added 1GiB of Memory to the VM {{trigger[0].source_entity_info.name}}.``
 
    .. note::
 
-      You are welcome to compose your own subject message. The above is just an example. You could use the “parameters” to enrich the message.
+      独自の件名メッセージを作成することができます。上記は一例です。「parameters」を使用してメッセージを充実させることができます。
 
    .. figure:: images/rs20.png
 
-#. Last, we would like to call back to the ticket service to resolve the ticket in the ticket service. Click **Add Action** to add the REST API action. Fill in the following values replacing the <GTSPrismOpsLabUtilityServer_IP_ADDRESS> in the URL field.
+#. 最後に、チケットサービスにコールバックして、チケットサービスでチケットを解決します。 **Add Action** をクリックして、REST API アクションを追加します。URLフィールドの <GTSPrismOpsLabUtilityServer_IP_ADDRESS> を置き換えて、次の値を入力します。
 
    - **Method:** PUT
    - **URL:** http://<GTSPrismOpsLabUtilityServer_IP_ADDRESS>/resolve_ticket
@@ -194,55 +193,55 @@ Now let's look at how we can take automated action to resolve some of these inef
 
    .. figure:: images/rs21.png
 
-#. Click **Save & Close** button and save it with a name “*Initials* - Resolve Service Ticket”. **Be sure to enable the ‘Enabled’ toggle.**
+#. **Save & Close** ボタンをクリックしてください。 “*Initials* - Resolve Service Ticket” という名前で保存します。 **必ず「Enabled」トグルを有効にしてください。**
 
    .. figure:: images/rs22.png
 
-#. Now let's trigger the workflow. Navigate to the tab you opened in the setup with the **/alerts** URL [example 10.42.113.52/alerts]. Select the Radio for **VM Memory Constrained** and input your VM. Click the **Simulate Alert** button. This will simulate a memory constrained alert on your VM.
+#. 次に、ワークフローをトリガーします。 **/alerts** URL [example 10.42.113.52/alerts] を使用して、セットアップで開いたタブに移動します。 **VM Memory Constrained** Radioを選択しVMを入力します。 **Simulate Alert** ボタンをクリックします。これにより、VMのメモリー制限のアラートをシミュレートします。
 
    .. figure:: images/rs23.png
 
-#. You should recieve an email to the email address you put down in the first playbook. It may take up to 5 minutes.
+#. 最初のプレイブックに記載したメールアドレス宛にメールを受信する必要があります。5分ほどかかる場合があります。
 
    .. figure:: images/rs24.png
 
-#. Inside the email click the link to visit the ticket system. Alternatively you can directly access the ticket system by navigating to http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem from a new tab in your browser.
+#. メール内のリンクをクリックして、チケットシステムにアクセスします。または、ブラウザの新しいタブから http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem に移動して、チケットシステムに直接アクセスできます。
 
    .. figure:: images/rs25.png
 
-#. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Run Playbook** option.
+#. VM用に作成されたチケットを特定し、縦のドットアイコンをクリックして Actions メニューを表示します。 **Run Playbook** をクリックします。
 
    .. figure:: images/rs26.png
 
-#. Choose the 2nd playbook you created **`Initials` - Resolve Service Ticket**, to run for this ticket.
+#. 作成した2番目のプレイブック **`Initials` - Resolve Service Ticket**　を選択して、このチケットを実行します。
 
    .. figure:: images/rs27.png
 
-#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. Click on the title of the Play in the table to take a closer look.
+#. Prism Centralコンソールを開いたまま、前のタブに切り替えます。 **`Initials` - Resolve Service Ticket** プレイブックを開き、ビューの上部にある **Plays** タブをクリックして、このプレイブックで実行されたプレイを確認します。表でプレイのタイトルをクリックして、詳しく見てください。
 
    .. figure:: images/rs29.png
 
-#. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view.
+#. このビューを展開して、各項目の詳細を表示できます。エラーがあった場合、それらもこのビューに表示されます。
 
    .. figure:: images/rs30.png
 
-#. You can navigate back to your VM and verify that the Memory was indeed increased by 1 GiB.
+#. VMに戻って、メモリーが実際に1GiB増加したことを確認できます。
 
    .. figure:: images/rs31.png
 
-#. You should also get an email telling you that the playbook ran.
+#. また、プレイブックが実行されたことを知らせるメールが届きます。
 
    .. figure:: images/rs32.png
 
-Takeaways
+本章のまとめ
 .........
 
-- Prism Ops is our solution to make IT OPS smarter and automated. It covers the IT OPS process ranging from intelligent detection to automated remediation.
+- Prism Opsは、IT OPSをよりスマートで自動化するためのソリューションです。 インテリジェントな検出から自動修復までのIT OPSプロセスをカバーしています。
 
-- X-FIT is our machine learning engine to support smart IT OPS, including anomaly detection, and inefficiency detection.
+- X-FITは、異常検出や非効率さの検出などのスマートIT OPSをサポートする当社の機械学習エンジンです。
 
-- X-Play, the IFTTT for the enterprise, is our engine to enable the automation of daily operations tasks.
+- 企業向けのIFTTT（あるWebサービスとあるWebサービス間を自動的に連携する機能）であるX-Playは、日常の運用タスクの自動化を可能にするエンジンです。
 
-- X-Play enables admins to confidently automate their daily tasks within minutes.
+- X-Playにより、管理者は毎日のタスクを数分のステップで自動化することができます。
 
-- X-Play is extensive that can use customer’s existing APIs and scripts as part of its Playbooks, and can integrate nicely with customers existing ticketing workflows.
+- X-Playは広範囲にわたり、お客様の既存のAPIとスクリプトをプレイブックの一部として使用でき、お客様の既存のワークフローと統合できます。
