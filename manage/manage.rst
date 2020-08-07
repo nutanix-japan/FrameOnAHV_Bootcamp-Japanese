@@ -1,332 +1,339 @@
 .. _framemanage:
 
 --------------------------
-Managing Xi Frame Desktops
+Xi Frameデスクトップの管理
 --------------------------
 
-Now that you have registered and associated your AHV cluster to your customer entity, you can now create your first Frame account using your AHV cluster resources. What’s in a Frame account? A Frame account consists of, at a minimum:
+AHVクラスターをFrameに登録して顧客エンティティに関連付けたら、AHVクラスターのリソースを使用して最初のFrameアカウントを作成できます。
+Frameアカウントには何がありますか？frameアカウントは、少なくとも次のもので構成されます。
 
-- Sandbox VM which is used to manage the gold master image for the account. The Sandbox image is a copy of the template image you brought during the CCA creation workflow.
-- One or more pools of “production” VMs, based on the instance types you defined when you added the CCA to Frame. These production pool VMs will be used by end users to access their virtualized desktops or published applications.
+- アカウントのゴールドマスターイメージを管理するために使用されるサンドボックスVM。サンドボックスイメージは、テンプレートイメージのコピーです。
+- CCAをFrameに追加したときに定義したインスタンスタイプに基づいた「Production」VMの1つ以上のプール。これらの「Production」プールのVMは、エンドユーザーが仮想デスクトップまたは公開アプリケーションにアクセスするために使用されます。
 
-**In this lab you will walk through configuring a Frame account, including configuring capacity, Launchpads, user management, and other administrative controls. After testing your initial published desktop, you will explore how updates can be applied and rolled out through Frame.**
+**この演習では、容量、ローンチパッド、ユーザー管理、その他の管理コントロールの構成など、Frameアカウントの構成について学習します。公開されれいるデスクトップをテストした後、Frameを通じてデスクトップの更新および展開する方法を学習します。**
 
-Deploying a Desktop Pool
+デスクトッププールのデプロイ
 ++++++++++++++++++++++++
 
-#. From the **Xi Frame** portal, select **Accounts** from the left hand menu and click **Add Account**.
+#. **Xi Frame** の左側のメニューから **Accounts** を選択して **Create Account** をクリックします。
 
-#. Under **Region and Network**, fill out the following fields and click **Next**:
+#. **Region and Network** で、次も項目を入力して **Next** をクリックします。
 
    - **Name** - *Initials*\ -W10NP
    - **URL name** - (Default, based on Name)
    - **Cloud Provider** - Nutanix
-   - **Region** - *The Cloud Account Name previously configured through the CCA*
+   - **Region** - *CCAの場所*
 
    .. figure:: images/1b.png
 
-#. Under **Configuration**, note the available options correspond to your CCA selections. Choose an **Instance Type** and increase the slider value to provide more storage capacity to the VMs. Do **NOT** select **Persistent desktop**. Click **Next**.
+#. **Configuration** で **Instance Type** を選択し、スライダーの値を増やして、VMにより多くのストレージ容量を提供します。 **Persistent desktop** は、選択 **しない** でください。 **Next** をクリックします。
 
    .. figure:: images/2.png
 
    .. note::
 
-     *If each user sessions utilizes a dedicated VM, as in traditional VDI (rather than a shared model like RDS or XenApp), why does Frame use Windows Server OS images?*
+     *（RDSやXenAppのような共有モデルではなく）従来のVDIのように、各ユーザーセッションが専用のVMを使用する場合、FrameがWindows Server OSイメージを使用するのはなぜですか？*
 
-     Historically, due to Microsoft Windows licensing restrictions, AWS and Azure provide Windows Server OS images. The Windows Server images are presented with a familiar Windows desktop UI, and generally support all of the same applications.
+     従来、Microsoft Windowsのライセンス制限により、AWSとAzureはWindows Server OSイメージを提供していました。Windows Serverイメージは、使い慣れたWindowsデスクトップUIで表示され、通常は同じアプリケーションのすべてをサポートします。
 
-     Microsoft has made some adjustments in their Windows licensing so Xi Frame is able to support Windows 10 on Azure and Nutanix AHV. Customers must bring their own Microsoft VDA licenses for Windows 10.
+     MicrosoftはWindowsライセンスにいくつかの調整を加えたため、Xi FrameはAzureおよびNutanix AHVでWindows 10をサポートできます。お客様は、Windows 10用の独自のMicrosoft VDAライセンスをご持参いただく必要があります。
 
-#. Click **Create** to begin provisioning the pool based on your selections, including a Sandbox VM.
+#. **Create** をクリックして、サンドボックスVMなどの選択に基づいてプールのプロビジョニングを開始します。
 
-   Your Sandbox is a special instance that serves as the basis for creating all of your production instances. Its disk is often called a “Gold Master” or “Master Image.” When you launch the Sandbox desktop, you have full admin access to install new apps or apply system updates.
+   サンドボックスは、すべてのproductionインスタンスを作成するためのベースとして機能する特別なインスタンスです。そのディスクは、しばしば「ゴールドマスター」または「マスターイメージ」と呼ばれます。サンドボックスデスクトップを起動すると、新しいアプリをインストールしたり、システムアップデートを適用したりするための完全な管理アクセス権が付与されます。
 
-#. From the **Accounts** page, select the previously created account to view the **Summary** dashboard.
+#. **Accounts** ページから、作成したアカウントの **Summary** ダッシュボードを開きます。
 
    .. figure:: images/4.png
 
-   In the following exercises we'll complete configuration of this pool of Xi Frame resources, exploring more of the Xi Frame administrative portal.
+   次の演習では、Xi Frameリソースのプールの構成作業を完了し、Frame管理ポータルを詳しく見ていきます。
 
-Configuring Capacity
+容量の設定
 ++++++++++++++++++++
 
-#. Click **Capacity** in the sidebar.
+#. サイドバーの **Capacity** をクリックします。
 
-   Frame provides considerable flexibility to define the minimum and maximum number of available desktops, allowing administrators to balance cost and instant availability. Capacity can also be configured on a per Instance Type basis.
+   Frameは、利用可能なデスクトップの最小数と最大数を柔軟に設定できますので、管理者はコストと可用性のバランスを考慮して設定することができます。インスタンスタイプごとに構成することもできます。
 
-#. Hover over the :fa:`info-circle` icons to understand the different controls available.
+#. :fa:`info-circle` アイコンにカーソルを合わせると利用可能なさまざまな管理機能を理解できます。
 
-   As each VM supports 1 concurrent user in Frame, the number of concurrent users supported by a production pool should equal the **Max number of instances**.
+   Frameでは各VMは同時ユーザー1人をサポートするため、productionプールでサポートされる同時ユーザーの数は、**Max number of instances** と同じである必要があります。
 
-#. On the **AHV 2vCPU 4GB** tab, increase the **Buffer instances** to **1** and **Max number of instances** to **3**. Click **Save > Confirm**.
+#. **AHV 2vCPU 4GB** タブで、 **Buffer instances** を **1** と **Max number of instances** を **3** に増やします。 **Save > Confirm** をクリックします。
 
    .. figure:: images/5.png
 
-   Increasing **Buffer instances** to 1 directs Frame to have at least one VM powered on and available for the next user. As each user connects into a Frame session, Frame will power on the next VM to maintain **Buffer instances** = 1 (until the **Max number of instances** of 3 is reached).
+   **Buffer instances** を1に増やすと、Frameは少なくとも1つのVMの電源がオンになり、次ユーザーが使用できるようになります。各ユーザーがFrameセッションに接続すると、Frameは次のVMをパワーオンします。 （ **Max number of instances** の通り、最大インスタンスが3に達するまでこれを繰り返します）。
 
    .. note::
 
-     For Cloud hosted desktops, each VM that is powered on results in a VM charge by AWS, Azure or GCP, regardless of whether the VM is being used. Unless there are justifiable reasons, the **Minimum number of instances** powered on and **Buffer instances** values should be set to 0 for Default capacity. If these two parameters are greater than 0, then AWS, Azure, and GCP will charge for those powered on VMs.
+      クラウドで提供されるデスクトップの場合、電源がオンになっている各VMは、VMが使用されているかどうかに関係なく、AWS、Azure、またはGCPによってVMの料金が発生します。正当な理由がない限り、電源をオンにする **Minimum number of instances** と **Buffer instances** の値は、デフォルトの容量に対して0に設定する必要があります。これら2つのパラメーターが0より大きい場合、AWS、Azure、およびGCPは、パワーオン状態のVMに対して課金します。
 
-#. Click **Save**.
 
-#. Under **Active capacity**, observe you can configure separate capacity policy to accommodate usage during peak periods (e.g. weekdays vs. weekends). **Leave the default selections.**
+#. **Save** をクリックします。
+
+#. **Active capacity** でピーク時（平日と週末など）の使用状況に対応するために個別の容量ポリシーを構成できることを確認します。 **デフォルトの選択のままにします。**
 
    .. figure:: images/6.png
 
-#. Once you have configured capacity for your pool, the template or "Gold Image" can be published, allowing desktop VMs to be created. Select **Sandbox** from the sidebar and click **Publish > Publish**.
+#. Productionププールの容量を構成したら、テンプレートまたは「ゴールドイメージ」を公開して、デスクトップVMを作成できます。サイドバーから **Sandbox** を選択し **Publish > Publish** をクリックします。
 
    .. figure:: images/6b.png
 
-   Publishing typically takes ~15 minutes or more, depending on the number of VMs that need to be provisioned with the Sandbox image. When the Account Administrator publishes the Sandbox, Frame Platform will backup the Sandbox image and prepare the image. Next, Frame Platform will provision VMs in a shadow pool using the new image. The max capacity value for a given production pool determines the number of VMs provisioned.
+   サンドボックスイメージでプロビジョニングする必要のあるVMの数にもよりますが、公開には通常15分以上かかります。アカウント管理者がサンドボックスを公開すると、Frameプラットフォームがサンドボックスイメージをバックアップします。次に、Frameプラットフォームは新しいイメージを使用してシャドウプールでVMをプロビジョニングします。特定のProductionプールの最大容量値により、プロビジョニングされるVMの数が決まります。
 
    .. During this process you will still be able to connect to and use your original production pool – *zero end-user downtime!* If a user was connected to a session when you initiated a publish, they could continue to work, uninterrupted. Once a user closes (not just disconnect) their session, the instance will be terminated and replaced with a VM from the shadow pool.
 
-   Each time you publish an updated version of your Sandbox image, Frame will automatically create a backup, allowing you to easily and rapidly roll back your production environment if necessary.
+   サンドボックスイメージの更新バージョンを公開するたびに、Frameが自動的にバックアップを作成し、必要に応じてProduciton環境を簡単かつ迅速にロールバックできます。
 
-#. While the initial template is published, continue to explore the Xi Frame administrative portal below.
+#. 最初のテンプレートが公開されている間、以降のFrame管理ポータルを引き続き学習してください。
 
-Configuring Launchpads
+ローンチパッドの構成
 ++++++++++++++++++++++
 
-The Launchpad is the end user-facing part of the Xi Frame platform interface where users have access to their published applications or desktops, as authorized by their Account Administrator. Each Launchpad is associated with a Frame account and dictates:
+ローンチパッドはFrameプラットフォームインターフェースのうち、エンドユーザー向けの部分であり、ユーザーはアカウント管理者の許可を得て、公開されたアプリケーションまたはデスクトップにアクセスできます。各ローンチパッドはFrameアカウントに関連付けられており、次のことを設定します。
 
-- Whether the Launchpad provides access to published applications (Application Launchpad) or a desktop (Desktop Launchpad)
-- The instance types that are allowed to be used with the Launchpad
-- Session settings for governing availability of one or more cloud storage providers, session timeouts, ability to copy/paste (bidirectionally or unidirectionally), print, download/upload files, Quality of Service (QoS) parameters governing the Frame Remoting Protocol, etc.
+- ローンチパッドが公開アプリケーション（アプリケーションローンチパッド）またはデスクトップ（デスクトップローンチパッド）へのアクセスを提供するかどうか
 
-Additionally, the Account Administrator can use Role-Based Access Control (RBAC) to determine which end users or groups of end users have access to which Launchpad(s), thereby controlling what published applications or desktops are allowed, on which instance types, and under what session settings.
+- ローンチパッドでの使用が許可されているインスタンスタイプ
 
-#. Select **Launchpads** from the sidebar. Click **Add Launchpad**.
+- 1つまたは複数のクラウドストレージプロバイダーの可用性を管理するためのセッション設定、セッションタイムアウト、コピー/貼り付け（双方向または単方向）、印刷、ファイルのダウンロード/アップロード、Frame Remoting Protocolを管理するサービス品質（QoS）パラメーターなど
 
-#. Keeping the default values, click **Add Launchpad** to create a Launchpad for running seamless applications.
+さらに、アカウント管理者は、役割ベースのアクセス制御（RBAC）を使用して、どのエンドユーザーまたはエンドユーザーのグループがどのローンチパッドにアクセスできるかを決定し、それによって、どの公開アプリケーションまたはデスクトップがどのインスタンスタイプで許可されるかを制御できます。
+
+#. サイドバーから **Launchpads** を選択します。 **Add Launchpad** をクリックします。
+
+#. デフォルト値のまま **Add Launchpad** をクリックして、シームレスなアプリケーションを実行するためのローンチパッドを作成します。
 
    .. figure:: images/7.png
 
-#. Under **Applications**, click **Add all applications** to publish all detected applications within your template image.
+#. **Applications** でご自身のテンプレートイメージ内で検出されたすべてのアプリケーションを公開するため **Add all applications** をクリックします。
 
    .. figure:: images/8.png
 
-#. Optionally, click **Manage Applications** and use the toggle switches to add or remove applications on your Launchpad.
+#. 必要に応じて **Manage Applications** をクリックし、トグルスイッチを使用して、ローンチパッドでアプリケーションを追加または削除します。
 
    .. figure:: images/9.png
 
-   Application icons can be dragged around to re-order how they will appear to end users, or dragged on top of one another (similar to a mobile phone OS) to create folders for grouping apps within the Launchpad.
+   アプリケーションアイコンをドラッグしてエンドユーザーに表示される順序を並べ替えたり、ドラッグして（携帯電話のOSと同様に）ローンチパッド内でアプリをグループ化するためのフォルダーを作成したりできます。
 
    .. note::
 
-      Note the **AHV 4vCPU 6GB** toggle under **Instance Pools**. When multiple types are available, Launchpads can be enabled or disabled on a per Instance Type basis. This is used in two ways:
+      **Instance Pools** で **AHV 4vCPU 6GB** トグルを確認してください。複数のタイプが利用可能な場合、ローンチパッドはインスタンスタイプごとに有効または無効にできます。これは2つの方法が使用されます。
 
-      - When you want to restrict a user to a certain Instance Type (typically due to cost control), as users are assigned to Launchpads, and not specific Instance Pools.
+      - ユーザーが特定のインスタンスプールではなくローンチパッドに割り当てられているため、ユーザーを特定のインスタンスタイプ（通常はコスト管理のため）に制限する場合
 
-      - When you want to make certain apps, such as a high end 3D drafting application, available to only a particular Instance Type, such as a high performance, GPU accelerated VM.
+      - ハイエンドの3D CADアプリケーションなどの特定のアプリを、高性能のGPUアクセラレートVMなどの特定のインスタンスタイプでのみ使用できるようにする場合
 
-#. After you've finished making any customizations to your Launchpad, click **Save**.
+#. ローンチパッドのカスタマイズが完了したら **Save** をクリックします。
 
 ----------------------------------------------------------------
 
-#. Click **+ Add Launchpad** to add a **Desktop** launchpad with a customized name and URL slug. Click **Add Launchpad**.
+#. **+ Add Launchpad** をクリックして、カスタマイズされた名前とURLスラグを含む **デスクトップ** ランチパッドを追加します。 **Add Launchpad** をクリックします。
 
    .. figure:: images/10.png
 
-   Note that there are no individual applications to select, as this Launchpad will provide a single icon to launch a full desktop session.
+   このローンチパッドは、デスクトップセッション全体を起動するための単一のアイコンを提供するため、個別に選択するアプリケーションがないことを確認してください。
 
-#. Select an alternate background image (or upload your own) to visually differentiate the two Launchpads.
+#. 2つのローンチパッドを視覚的に区別するために、代替の背景画像を選択（または独自の背景画像をアップロード）します。
 
-   If Account Administrators wish to deliver individual applications (common when supporting task work or delivering applications into an existing desktop environment such as a corporate laptop), then an application Launchpad is appropriate. For user groups that are more comfortable with a desktop (even if it is non-persistent session and user data and files need to be persisted in a file server or cloud storage), then the Account Administrator can offer a Desktop Launchpad.
+   アカウント管理者が個別のアプリケーションを提供したい場合（タスク作業でのアプリーケーションを提供する場合や、企業のラップトップなどの既存のデスクトップ環境にアプリケーションを提供する場合）、アプリケーションローンチパッドが適しています。デスクトップに慣れているユーザーグループの場合、アカウント管理者はデスクトップローンチパッドを提供できます。
 
-Exploring Settings
+設定の探索
 ++++++++++++++++++
 
-#. Click **Settings** in the sidebar and select the **Session** tab.
+#. サイドバーの **Settings** をクリックし **Session** タブを選択します。
 
-   The **Session** tab allows an administrator to adjust the default session behavior for all Launchpads.
+   **Session** タブでは、管理者がすべてのラLaunchpadのデフォルトのセッション動作を調整できます。
 
    .. note::
 
-     Session settings can also be customized on a per Launchpad basis, or as previously seen, directly by the end user if allowed.
+     セッション設定は、Launchpadごとにカスタマイズすることも、許可されている場合はエンドユーザーが直接カスタマイズすることもできます。
 
      .. figure:: images/11.png
 
-   You can choose to give your users access to cloud storage, toggle various features such as upload/download, configure session time limits, and even customize session QoS settings in the **Network** section.
+   ユーザーにクラウドストレージへのアクセスを許可したり、アップロード/ダウンロードなどのさまざまな機能を切り替えたり、セッションの時間制限を構成したり **Network** セクションでセッションのQoS設定をカスタマイズすることもできます。
 
-#. Enable all **Storage** options and click **Save**.
+#. すべての **Storage** オプションを有効にして **Save** をクリックします。
 
    .. figure:: images/12.png
 
-Adding Users
+ユーザーの追加
 ++++++++++++
 
-While you can access applications and desktops using your administrative Frame account, adding new users is fast and simple.
+Frameの新しいユーザーの追加はすばやく簡単です。
 
-#. From the toolbar, click your **Customer** name (e.g. **nutanix.com-####**).
+#. ツールバーから **Customer** の名前をクリックします。 (例： **nutanix.com-####**).
 
    .. figure:: images/13.png
 
-#. Click :fa:`ellipsis-v` **> Users**
+#. :fa:`ellipsis-v` **> Users** をクリックします。
 
    .. figure:: images/14.png
 
-#. Enable the **Basic (username/password)** authentication provider and click **Save**.
+#. **Basic (username/password)** 認証プロバイダーを有効にして **Save** をクリックします。
 
    .. figure:: images/15.png
 
-   Frame supports several authentication mechanisms.
+   Frameはいくつかの認証メカニズムをサポートしています。
 
-   For most enterprises who have an identity provider (IdP) such as Okta, Ping, Azure AD, ADFS, we recommend the SAML2 integration. For enterprises who use Google Sign-In, Frame integrates with Google Identity via OAuth2.
+   Okta、Ping、Azure AD、ADFSなどのIDプロバイダー（IdP）のほとんどの企業では、SAML2統合をお勧めします。Googleログインを使用する企業の場合、FrameはOAuth2を介してGoogle Identityと統合されます。
 
-   For customers who do not have an IdP, Frame provides a native identity provider, allowing an administrator to create and control local e-mail address based accounts.
+   IdPをお持ちでないお客様向けに、FrameはネイティブIDプロバイダーを提供し、管理者がローカルの電子メールアドレスベースのアカウントを作成および制御できるようにします。
 
    .. note::
 
-      The Frame Basic identity provider is not intended to be used as an enterprise identity provider. It has no support for configurable password strength policies, multi-factor authentication, or ability to aggregate users into groups. It is meant only for customers who need a simple IdP for testing. Nutanix highly recommends customers integrate an enterprise-grade identity provider.
+      Frame Basic IDプロバイダーは、エンタープライズIDプロバイダーとして使用するためのものではありません。構成可能なパスワードの強度ポリシー、多要素認証、またはユーザーをグループに集約する機能はサポートされていません。これは、テストにシンプルなIdPが必要なお客様のみを対象としています。Nutanixは、エンタープライズグレードのIDプロバイダーを統合することを強くお勧めします。
 
-   Because Frame is a Platform as a Service, there are both Javascript and Web Services APIs for enterprises and partners used to embed Frame into their own web applications. In the case of Web Services APIs, the API mechanism is used to generate API keys to authenticate to the Frame API endpoints.
+   FrameはPlatform as a Serviceであるため、Frameを自社のWebアプリケーションに埋め込むために使用されるエンタープライズおよびパートナー向けのJavaScriptおよびWebサービスAPIの両方があります。WebサービスAPIの場合、APIメカニズムは、フレームAPIエンドポイントに対して認証するためのAPIキーを生成するために使用されます。
 
-   Additionally, providers can be enabled/configured on a per customer, organization, or account (pool) basis.
+   さらに、プロバイダーは、顧客、組織、またはアカウント（プール）ごとに有効化/構成できます。
 
-#. Select the **Basic (username/password)** tab and click **Invite Users**.
+#. **Basic (username/password)** タブを選択し **Invite Users** をクリックします。
 
-#. Enter your business or personal e-mail address and add **Launchpad User** roles for each of the Launchpads you have created.
+#. ビジネスまたは個人の電子メールアドレスを入力し、作成した **Launchpad User** ロールを追加します。
 
    .. figure:: images/16.png
 
-#. Click **Invite**.
+#. **Invite** をクリックします。
 
-#. Select the **MyNutanix** tab and click **+ Add** under **User Access** to allow users with My Nutanix accounts to access each of the Launchpads you have created. Click **Save**.
+#. **MyNutanix** を選択し **User Access** の下の **+ Add** をクリックして、My Nutanixアカウントを持つユーザーが作成した各Launchpadにアクセスできるようにします。 **Save** をクリックします。
 
    .. figure:: images/17.png
 
-   With just a few clicks, you've enabled users from multiple IDPs access to your pool of Xi Frame resources.
+   数回クリックするだけで、複数のIDPのユーザーがXi Frameリソースのプールにアクセスできるようになりました。
 
-Testing End User Experience
+エンドユーザーエクスペリエンスのテスト
 +++++++++++++++++++++++++++
 
-In this exercise, you will connect to your Frame desktop as an end user. The diagram below illustrates the typical network topology for a user connecting to a Frame desktop running in a Nutanix Private Cloud. In this environment you are connecting via a LAN connection, so the optional Streaming Gateway Appliance is not used.
+この演習では、エンドユーザーとしてFrameデスクトップに接続します。以下の図は、Nutanix Private Cloudで実行されているFrameデスクトップに接続するユーザーの一般的なネットワークトポロジを示しています。この環境ではLAN経由で接続しているため、ネットワーク負荷のかかるオプションのストリーミングゲートウェイアプライアンスは使用しません。
 
 .. figure:: images/31.png
 
-#. From the sidebar, select **Accounts >** *Initials*\ **-W10NP** to return to managing your pool.
+#. サイドバーから **Accounts >** *Initials*\ **-W10NP** を選択して、プールの管理に戻ります。
 
-   By now your image should have finished publishing. You can verify this in a number of ways. On the **Summary** page, you should now see **1 Active Instance** under **Status** due to the buffer capacity configuration.
+   これでイメージの公開が完了しました。これはさまざまな方法で確認できます。 **Summary** ページでバッファの容量の構成により、 **Status** で **1 Active Instance** が表示されます。
 
-#. Click **Sandbox** and note the Sandbox now lists a **Last published on...** timestamp, and a snapshot of the image is available under **Backups**.
+#. **Sandbox** をクリックして、サンドボックスに **Last published on...** タイムスタンプが表示され、イメージのスナップショットが **Backups** にあることを確認してください。
 
-#. Click **Status** in the sidebar and note there are 3 **Production** VMs provisioned, with 1 in a **Running** state. Note the **Workload ID** corresponds to the **frame-instance-prod-...** VM name in Prism.
+#. サイドバーの **Status** をクリックして、3つの **Production** VMがプロビジョニングされ、1つが実行中の **Running** 状態であることを確認します。 **Workload ID** は、Prism の **frame-instance-prod-...** VM名に対応することを確認してください。
 
    .. figure:: images/18.png
 
    .. note::
 
-      Try selecting one of the **frame-instance-prod-...** VMs in Prism Central and viewing the assigned categories. What additional categories and values have automatically been generated within the cluster by the CCA?
+      Prism Centralで **frame-instance-prod-...** VMの1つを選択して、割り当てられたカテゴリを表示してみてください。
+      CCAによってクラスター内で自動的に生成された追加のカテゴリーと値は何ですか？
 
-#. From the toolbar, select your name in the upper right hand drop down menu and click **Logout**.
+#. ツールバーの右上のドロップダウンメニューでご自身の対象名を選択し **Logout** をクリックします。
 
-#. To log back into the environment as a user, open your **You’ve been invited to join Nutanix Frame** e-mail. Launch the **Get Started** link and provide your name and a password.
+#. ユーザーとして環境に再度ログインするには、Nutanix Frameの **You’ve been invited to join Nutanix Frame** を開きます。 **Get Started** リンクを起動して、名前とパスワードを入力します。
 
    .. figure:: images/19.png
 
-#. You should be presented by your **Application Launchpad**.
+#. **アプリケーションローンチパッド** で提供します。
 
-#. Note the status bar at the bottom at the bottom of the Launchpad.
+#. Launchpadの下部にある下部のステータスバーを確認してください。
 
    .. figure:: images/20.png
 
-   The **AHV 2vCPU 4GB** denotes the **Instance Type**. Note that if you select the **AHV 4vCPU 6GB** profile, the application resources are unavailable, as no capacity was configured for this Instance Type.
+   **AHV 2vCPU 4GB** は **Instance Type** を表します。 **AHV 4vCPU 6GB** プロファイルを選択した場合、このインスタンスタイプには容量が構成されていないため、アプリケーションリソースは利用できません。
 
-#. Click on **Google Chrome** to launch your first Frame session.
+#. **Google Chrome** をクリックして、最初のFrameのセッションを起動します。
 
    .. figure:: images/21.png
 
-   You will be launching Google Chrome in “application mode,” as opposed to full desktop delivery.
+   完全なデスクトップ配信ではなく、「アプリケーションモード」でGoogle Chromeを起動します。
 
-   The session should begin almost instantly, as the environment has been configured to pre-boot a minimum of 1 VM, and maintain an available buffer of 1 VM. Without this configuration, the initial session could take ~2 minutes to launch, as the VM resources would have to be booted on demand once the user clicked the application in the Launchpad.
+   環境は最低1VMをプリブートし、1VMの使用可能なバッファーを維持するように構成されているため、セッションはほぼ即座に開始されます。この構成がない場合、ユーザーがローンチパッドでアプリケーションをクリックすると、VMリソースをオンデマンドで起動する必要があるため、初期セッションの起動に最大2分かかる可能性があります。
 
-   Once your browser is connected into your Frame session, you will see Chrome within your browser. Notice that you can resize the Chrome window and maximize the Chrome application to occupy the entire browser tab. However, there is no underlying desktop visible.
+   ブラウザがFrameのセッションに接続されると、ブラウザ内にChromeが表示されます。Chromeウィンドウのサイズを変更し、Chromeアプリケーションを最大化してブラウザタブ全体を占めることができることを確認してください。ただし、基盤となるデスクトップは表示されません。
 
-   Note the changes to the status bar that appears at the bottom of your local browser window.
+   ローカルブラウザウィンドウの下部に表示されるステータスバーの変化を確認してください。
 
    .. figure:: images/22.png
 
-#. Click the :fa:`gear` icon on the status bar to explore the actions available to a user during the session, such as launching and switching to other applications and network QoS settings.
+#. ステータスバーの :fa:`gear` アイコンをクリックして、他のアプリケーションの起動や切り替え、ネットワークQoS設定など、セッション中にユーザーが使用できるアクションを確認します。
 
-#. Click :fa:`gear` **> Show/hide stats** to show bandwidth utilization in the status bar. Click **Session stats** to view expanded statistics.
+#. :fa:`gear` **> Show/hide stats** をクリックすると帯域幅の使用状況を表示するための統計が表示/非表示できます。詳細な統計を表示するには **Session stats** をクリックします。
 
    .. figure:: images/30.png
 
-   Note that when the display is not changing, the Frame Remoting Protocol will adapt and drop the frame rate to 0. Consumed bandwidth will fall to 1 kbps.
+   .. note::
 
-#. Begin playing a YouTube video with the highest available quality and note bandwidth consumption. Note the consumed bandwidth.
+      表示が変化しない場合、Frame Remoting Protocolはフレームレートを適応させて0に落とします。消費帯域幅は1kbpsに下がります。
 
-#. Click :fa:`gear` **> Settings** and reduce **Max frame rate** and **Max videobit rate** to their lowest values. These settings can be controlled by an administrator to help balance experience and bandwidth consumption.
+#. 利用可能な最高の品質でYouTube動画の再生を開始し、帯域幅の消費を記録します。消費された帯域幅を確認してください。
 
-#. Hover over the remaining elements in the status bar to see what they do.
+#. :fa:`gear` **> Settings** をクリックし  **Max frame rate** と **Max videobit rate** を最低値に下げます。管理者はこれらの設定を制御して、エクスペリエンスと帯域幅の消費のバランスをとることができます。
 
-#. Click :fa:`gear` **> Disconnect** to return to the Launchpad without ending the session.
+#. ステータスバーの残りのエレメントにカーソルを合わせると、それらの機能が表示されます。
 
-#. Click the icon at the top of the Launchpad to switch to the **Desktop** Launchpad. Launch the **Desktop** and note you are connected to the same VM session, with Chrome still running.
+#. セッションを終了せずにLaunchpadに戻るには、 :fa:`gear` **> Disconnect** クリックします。
+
+#. Launchpadの上部にあるアイコンをクリックして **Desktop** Launchpadに切り替えます。 **Desktop** を起動し、Chromeを実行したまま、同じVMセッションに接続していることを確認します。
 
    .. figure:: images/23.png
 
-#. In **Prism Central**, note that an additional **frame-instance-prod-...** VM has been powered on to maintain the 1 VM buffer policy.
+#. **Prism Central** では、追加の **frame-instance-prod-...** VMは1つのVMバッファポリシーを維持するために電源が投入されていることを確認してください。
 
-Adding New Applications
+新しいアプリケーションの追加
 +++++++++++++++++++++++
 
-Frame makes it very simple to customize your "Gold" image and add new applications.
+Frameを使用すると、ゴールドマスターのカスタマイズと新しいアプリケーションの追加が非常に簡単になります。
 
-#. Leave your connection to your Frame desktop running. Open https://frame.nutanix.com in a new browser tab and **Log off** of the user account.
+#. Frameデスクトップへの接続を実行したままにします。新しいブラウザータブで https://frame.nutanix.com を開き、ユーザーアカウントから **Log off** します。
 
-#. When prompted, click **Sign in with My Nutanix** and provide your My Nutanix credentials. From your username drop down menu, click **Go to Dashboard** to access the Xi Frame administrator portal.
+#. プロンプトが表示されたら **Sign in with My Nutanix** をクリックし、My Nutanix資格情報を入力します。ユーザー名のドロップダウンメニューから **Go to Dashboard** をクリックして、Frame管理者ポータルにアクセスします。
 
    .. figure:: images/24.png
 
-#. Select **Sandbox** from the sidebar and click **Power on** to boot the Sandbox VM.
+#. サイドバーから **Sandbox** を選択し **Power on** をクリックしてサンドボックスVMを起動します。
 
-#. When the **Status** changes to **Running**, click **Start session** to launch the connection to your Sandbox VM.
+#. **Status** が **Running** に変わったら **Start session** をクリックして、サンドボックスVMへの接続を開始します。
 
    .. figure:: images/25.png
 
-#. Download an application installer to the Sandbox desktop (the example below uses the `PuTTY <https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html>`_) and install the new application. For many applications, Frame will recognize that you just installed an application and ask you if you wish to onboard the application (for application delivery). If prompted, click **OK** to automatically onboard the applications into Frame.
+#. アプリケーションインストーラーをサンドボックスデスクトップにダウンロードし（以下の例では `PuTTY <https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html>`_ を使用しています）、新しいアプリケーションをインストールします。多くのアプリケーションで、Frameはアプリケーションをインストールしたことを認識し、アプリケーション配信用に登録（オンボード）するかどうかを尋ねます。メッセージが表示されたら **OK** をクリックして、アプリケーションを自動的にFrameにオンボードします。
 
    .. figure:: images/26.png
 
    .. note::
 
-      Alternatively, you can simply right-click the application icon and select **Onboard to Frame**.
+      または、アプリケーションアイコンを右クリックして **Onboard to Frame** を選択することもできます。
 
       .. figure:: images/27.png
 
-      If an administrator plans to deliver a desktop, they simply install the applications in the Sandbox and do not have to onboard.
+      管理者がデスクトップの提供を計画している場合は、サンドボックスにアプリケーションをインストールするだけで、アプリケーション配信用に登録（オンボード）する必要はありません。
 
-#. Click :fa:`gear` **> Disconnect** to return to the Dashboard.
+#. :fa:`gear` **> Disconnect** してダッシュボードに戻ります。
 
-   Your newly onboarded app(s) will appear under **Applications**, which you can hover over to edit properties or remove the application. Deleting the application in the Dashboard, referred to as offboarding, will not remove it from your image, but will remove it from your Launchpad(s).
+   新しくアプリケーション配信用に登録（オンボード）したアプリが **Applications** に表示されます。これにカーソルを合わせると、プロパティを編集したり、アプリケーションを削除したりできます。ダッシュボードでアプリケーションを削除すると、オフボーディングと呼ばれ、イメージからは削除されませんが、ラウンチパッドからは削除されます。
 
-#. Optionally, remove any unwanted applications from the Dashboard (e.g. Notepad).
+#. 必要に応じて、ダッシュボードから不要なアプリケーション（メモ帳など）を削除します。
 
    .. figure:: images/28.png
 
    .. note::
 
-     If a user has access to the full desktop via a Launchpad, they will be able to access all applications within the image, regardless of whether or not they have been onboarded and published as individual apps.
+     ユーザーがをFrame介してデスクトップ全体にアクセスできる場合、オンボードされていて個別のアプリとして公開されているかどうかに関係なく、イメージ内のすべてのアプリケーションにアクセスできます。
 
-   Next we will publish our changes to the Sandbox image to allow users to access the new applications.
+   次に、サンドボックスイメージへの変更を公開して、ユーザーが新しいアプリケーションにアクセスできるようにします。
 
-#. Under **Sandbox**, click :fa:`ellipsis-v` **> Close Session** to end the active Sandbox session.
+#. **Sandbox** で :fa:`ellipsis-v` **> Close Session** をクリックして、アクティブなサンドボックスセッションを終了します。
 
-#. Click **Publish > Publish** to roll out your updated image.
+#. **Publish > Publish** をクリックして、更新したイメージを公開します。
 
-   As a reminder, publishing typically takes ~15 minutes. During this process you will still be able to connect to and use your original production pool – *zero end-user downtime!* If a user was connected to a session when you initiated a publish, they could continue to work, uninterrupted. Once a user closes (not just disconnect) their session, the instance will be terminated and replaced with a VM from the shadow pool.
+   公開には通常15分ほどかかります。この作業中も、Producitonのプールに接続して使用できます。 – *エンドユーザーのダウンタイムはゼロです！* 公開を開始したときにユーザーがセッションに接続していた場合、ユーザーは接続を中断されることなく作業を続けることができます。ユーザーがセッションを閉じる（切断するだけではない）と、インスタンスは終了し、シャドウプールのVMに置き換えられます。
 
-#. Select **Launchpads** from the sidebar and click **Manage Applications**. Enable the new applications you've added to your golden image and click **Save**.
+#. サイドバーから **Launchpads** をクリックし **Manage Applications** をクリックします。ゴールデンイメージに追加した新しいアプリケーションを有効にして **Save** をクリックします。
 
    .. figure:: images/29.png
 
-#. Once the updated image has been published, return to your user Desktop session and click :fa:`gear` **> Close Session > Close Session** to terminate the session. Return to the **Applications** Launchpad and launch one of your new applications.
+#. 更新されたイメージが公開されたら、ユーザーのデスクトップセッションに戻り :fa:`gear` **> Close Session > Close Session** をクリックして、セツションを終了します。 **Applications** Launchpad に戻り、新しいアプリケーションの一つを起動します。
 
    .. note::
 
-      This session may take slightly longer to start, as VM resources may not yet be pre-booted according to the Capacity configuration. You can verify this on the **Status** page in the **Xi Frame** portal.
+      ディスク容量によってはVMリソースがまだプリブートされていない可能性があるため、このセッションの開始には少し時間がかかる場合があります。 **Frame** 管理者ポータルの **Status** ページでステータスを確認できます。
 
-   In minutes you've rolled out an updated image to your resource pool, without interrupting on-going sessions.
+   数分で、ユーザーが利用中の接続を中断することなく、更新されたイメージをリソースプールに展開しました。

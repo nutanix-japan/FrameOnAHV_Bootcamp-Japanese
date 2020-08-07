@@ -4,11 +4,11 @@
 Flowによるデスクトップの保護
 ---------------------------
 
-Flowのセキュリティポリシーは、VMが相互に通信することを防ぎながら、インバウンドおよびアウトバウンドアクセスを許可、制限することができます。また、攻撃から防御するためにVM間のトラフィックの拡散を防止することが重要となるWebサーバーやデスクトップなどのアプリケーションに最適です。
+Flowのセキュリティポリシーは、VMが相互に通信することを制限しながら、インバウンドおよびアウトバウンドアクセスを許可、制限することができます。また、攻撃から防御するためにVM間のトラフィックを制限することが重要となるWebサーバーやデスクトップなどのアプリケーションに最適です。
 
-**このラボでは、デスクトップVMにアプリケーションポリシーに適用し、デスクトップは通常の受信トラフィックおよび送信トラフィックがありますが、デスクトップ間のトラフィックはブロックするようにします。**
+**この演習では、デスクトップVMにアプリケーションポリシーに適用し、デスクトップは通常の受信トラフィックおよび送信トラフィックがありますが、デスクトップ間のトラフィックはブロックするようにします。**
 
-Categorizing the Desktop VMs
+デスクトップVMの分類
 ++++++++++++++++++++++++++++
 
 #. **Prism Central** から :fa:`bars` **> Virtual Infrastructure > Categories** を選択します。
@@ -19,7 +19,7 @@ Categorizing the Desktop VMs
 
 #. :fa:`plus-circle` アイコンをクリックして、カテゴリ値を追加します。
 
-#. 値として *Initials*-**FrameDesktops** とします。
+#. *Initials*-**FrameDesktops** と入力します。
 
    .. figure:: images/2.png
 
@@ -29,7 +29,7 @@ Categorizing the Desktop VMs
 
 #. :fa:`plus-circle` アイコンをクリックして、カテゴリ値を追加します.
 
-#. *Initials*-**Frame-W10NP** の値を入力します。
+#. *Initials*-**Frame-W10NP** と入力します。
 
    .. figure:: images/3.png
 
@@ -43,7 +43,7 @@ Categorizing the Desktop VMs
 
    .. note::
 
-      後世によっては**Buffer instances** to **0** に減らす場合もあります。
+      構成によっては **Buffer instances** を **0** に減らす場合もあります。
 
 #. サイドバーから **Status** を選択し、**Sandbox** VMの **Machine ID** をコピーします。
 
@@ -67,7 +67,7 @@ Categorizing the Desktop VMs
 
    .. figure:: images/3j.png
 
-デスクトップセキュリティポリシーの作成
+デスクトップのセキュリティポリシーの作成
 ++++++++++++++++++++++++++++++++++
 
 #. **Prism Central** から :fa:`bars` **> Policies > Security Policies** を選択します。
@@ -117,6 +117,7 @@ Categorizing the Desktop VMs
 #. 一方で **AppTier:**\ *Initials*-**PD** がまだ選択されていますので **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
 
 #. 次の項目を入力して、Frameデスクトップと **Default** のVM間のTCPポート **7680** での通信を許可し、ピアツーピアでのWindows更新を許可します。
+
    - **Protocol** - TCP
    - **Ports** - 7680
 

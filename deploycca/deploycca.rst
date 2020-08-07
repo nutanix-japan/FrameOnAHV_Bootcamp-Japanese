@@ -12,13 +12,13 @@ Frameコントロールプレーンは完全にクラウドで提供されます
 
 CCAの初期構成の後、AHVクラウドアカウントがFrameプラットフォームに正常に登録されると、Workload Cloud Connectorアプライアンス（WCCA、Prismではワークロードプロキシとも呼ばれます）が自動的にオンプレミス側に生成されます。WCCAにより、Frameプラットフォームはオーケストレーション情報をすべてのユーザーワークロードVM（サンドボックス、実稼働インスタンス、およびユーティリティサーバー）に送信できます。このアプライアンスがないと、エンドユーザーはワークロードVMに接続できません。
 
-**このラボでは、Frame Cloud Connectorアプライアンスをデプロイし、オンプレミスのNutanixクラスターとFrameコントロールプレーン間の接続を構成します。**
+**この演習では、Frame Cloud Connectorアプライアンスをデプロイし、オンプレミスのNutanixクラスターとFrameコントロールプレーン間の接続を構成します。**
 
 .. note::
 
-   CCAの作成プロセスは、[設定]メニューからのPrism Central 5.11.1のリリース以降、100％自動化されています。このラボでは、以下の手動に従って、アプライアンスVMをデプロイして構成します。
+   CCAの作成プロセスは、[Prism Central 5.11.1のリリース以降、100％自動化されています。この演習では、以下の手動に従って、アプライアンスVMをデプロイして構成します。
 
-Frame Accountアカウントの作成
+Frameアカウントの作成
 +++++++++++++++++++++++++++
 
 この演習では、My Nutanixの資格情報を使用して、Xi Frameトライアルサービスを利用します。
@@ -39,7 +39,7 @@ Frame Accountアカウントの作成
 
    .. figure:: images/0b.png
 
-5. Frameアカウント管理ポータルで、左側のメニューから **Organizations** を選択し **Create Organization** をクリックします。任意の名前を入力して **Create ** をクリックします。
+5. Frame管理ポータルで、左側のメニューから **Organizations** を選択し **Create Organization** をクリックします。任意の名前を入力して **Create** をクリックします。
 
    .. figure:: images/0c.png
 
@@ -53,13 +53,11 @@ Frame Accountアカウントの作成
 
       **Organizations**
 
-         Organizations（組織層）は、Frameプラットフォーム内で2番目に高い層です。ユースケースによっては、1顧客配下に多数の組織が作成される場合があります。企業は、Organizations（組織層）を使用して、社内のさまざまな部門に固有の環境をセットアップできます。このラボでは、アカウントを保持する1組織を作成し、AHVクラスタリソースを紐付けます。
+         Organizations（組織層）は、Frameプラットフォーム内で2番目に高い層です。ユースケースによっては、1顧客配下に多数の組織が作成される場合があります。企業は、Organizations（組織層）を使用して、社内のさまざまな部門に固有の環境をセットアップできます。この演習では、アカウントを保持する1組織を作成し、AHVクラスタリソースを紐付けます。
 
       **Accounts**
 
-         ワークロードVMを提供する場所です。また、ユーザー用のLaunchPadを作成する場所でもあります。
-         エンドユーザーがFrameにログインすると、ワークロードVMに接続するために
-         組織下にある各アカウントに関連付けられた各アカウント毎のLaunchPadにアクセスします。
+         ワークロードVMを提供する場所です。また、ユーザー用のローンチパッドを作成する場所でもあります。エンドユーザーがFrameにログインすると、ワークロードVMに接続するために組織下にある各アカウントに関連付けられた各アカウント毎のローンチパッドにアクセスします。
 
 Prismサービスアカウントの追加
 ++++++++++++++++++++++++++++
@@ -80,7 +78,7 @@ Prismサービスアカウントの追加
 Frameカテゴリーの追加
 +++++++++++++++++++++
 
-FrameはPrism Central Categoriesを使用して、Cloud Connector Applianceが、FrameアカウントのサンドボックスとデスクトップVMの作成に使用されるテンプレートイメージを識別できるようにします。
+FrameはPrism CentralのCategoriesを使用して、Cloud Connector Applianceが、FrameアカウントのサンドボックスとデスクトップVMの作成に使用されるテンプレートイメージを識別できるようにします。
 
 .. note::
 
@@ -188,9 +186,7 @@ CCAの設定
 
       **Enable enterprise profiles and personal drives** は演習では使用しないので選択する必要はありません。
 
-#. **Define Instance Types** で、既存のプロファイルを **AHV 2vCPU 4GB** に編集します。さらに図のように **Instance Type** を追加します。 **Next** をクリックします。
-   インスタンスタイプは、アプリケーションを実行するために起動されるVM構成です。パブリッククラウド環境では、そのクラウドプロバイダーで利用可能なインスタンスタイプ（AWS t.2largeなど）にマッピングされます。
-
+#. **Define Instance Types** で、既存のプロファイルを **AHV 2vCPU 4GB** に編集します。さらに図のように **Instance Type** を追加します。 **Next** をクリックします。インスタンスタイプは、アプリケーションを実行するために起動されるVM構成です。パブリッククラウド環境では、そのクラウドプロバイダーで利用可能なインスタンスタイプ（AWS t.2largeなど）がマッピングされます。
 
    .. figure:: images/6.png
 
@@ -198,26 +194,24 @@ CCAの設定
 
    .. figure:: images/7.png
 
-#. 最後のステップでは、オンプレミスのAHVを提供されたFrameバックプレーンに接続します。 **Connect to Frame** を選択して **My Nutanixでサインイン** します。ログイン後、事前に作成された **nutanix.com Customer** を選択し **Finish**　をクリックします。
+#. 最後のステップでは、オンプレミスのAHVをFrameバックプレーンに接続します。 **Connect to Frame** を選択して **My Nutanixでサインイン** します。ログイン後、事前に作成された **nutanix.com Customer** を選択し **Finish**　をクリックします。
 
    .. figure:: images/8.png
 
    .. note::
 
       現時点では、クラスターに接続した後は、Cloud Connector Applianceの構成を変更することはできません。
-      
 
-#. **Go to Frame** をクリックして、Xi Frameポータルにリダイレクトします。左側のメニューから **Organizations** を選択し :fa:`ellipsis-v` **> Cloud Accounts** をクリックして、AHVクラウドアカウントの作成ステータスを表示します。
+
+#. **Go to Frame** をクリックして、Frame管理ポータルに接続します。左側のメニューから **Organizations** を選択し :fa:`ellipsis-v` **> Cloud Accounts** をクリックして、AHVクラウドアカウントの作成におけるステータスを表示します。
 
    .. figure:: images/9.png
 
    .. note::
 
-      **Add Cloud Account** をクリックして、追加のAWS、Azure、およびGCPリソースを追加するためのウィザードを表示します。これらはすべて同じXi Frameポータルから一括管理できます。
+      **Add Cloud Account** をクリックして、AWS、Azure、およびGCPリソースを追加するためのウィザードを表示します。これらはすべて同じFrame管理ポータルから一括管理できます。
 
-　ステータス **C** は、アカウントの作成中であることを示しています。
-  Prism Centralは、CCA構成中に指定されたデスクトップVLANにワークロードプロキシVM
- (**frame-workload-proxy-####**) をプロビジョニングします。ステータスが **R** に変わると正常にプロビジョニングされています。確認後、次の演習に進みます。
+#. ステータス **C** は、アカウントの作成中であることを示しています。Prism Centralは、CCA構成中に指定されたデスクトップVLANにワークロードプロキシVM( **frame-workload-proxy-####** )をプロビジョニングします。ステータスが **R** に変わると正常にプロビジョニングされています。確認後、次の演習に進みます。
 
    .. figure:: images/10.png
 
