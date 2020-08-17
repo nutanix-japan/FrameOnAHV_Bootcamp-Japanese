@@ -128,9 +128,9 @@ FGAは、エンドユーザーのエンドポイントデバイスとFrame管理
 さらに、FGAはFrameプラットフォームのブローカー機能と連携して、ワークロードVMへのアクセスを求めるエンドユーザーのリクエストが確実に許可されるようにします。
 FGAは、セッション設定ポリシー（ローカルとFrameデスクトップ間のクリップボード機能、クリップボード機能の双方向・片方かの制御、ファイルのアップロード/ダウンロード、印刷、タイムアウトパラメータ、QoSパラメータなど）も適用します。また、個人用ドライブ、エンタープライズプロファイルディスクのマウントとアンマウント、およびクラウドストレージ連携を処理します。
 
-   .. note::
+.. note::
 
-      Nutanix Guest Tools（Frame Guest Agentではない）をゴールドマスターにインストールすることはできません。これは、Frameバックプレーンとワークロードインスタンス間の通信の問題を引き起こす可能性があるためです。イメージにすでにNutanixGuest Toolsがインストールされている場合は、Nutanix Guest Toolsをアンインストールする前にVirtIOドライバーをインストールする必要があります。VirtIOドライバーをインストールせずにNutanix Guest Toolsを削除しようとすると、仮想マシンが起動しなくなります。
+  Nutanix Guest Tools（Frame Guest Agentではない）をゴールドマスターにインストールすることはできません。これは、Frameバックプレーンとワークロードインスタンス間の通信の問題を引き起こす可能性があるためです。イメージにすでにNutanixGuest Toolsがインストールされている場合は、Nutanix Guest Toolsをアンインストールする前にVirtIOドライバーをインストールする必要があります。VirtIOドライバーをインストールせずにNutanix Guest Toolsを削除しようとすると、仮想マシンが起動しなくなります。
 
 #. **Prism Central** からゴールドマスターの仮想マシンを選択し、IPアドレスをメモを取ります。
 
@@ -140,8 +140,8 @@ FGAは、セッション設定ポリシー（ローカルとFrameデスクトッ
 
 #. **Disks > CD-ROM** を選択し :fa:`pencil` から次の項目を選択します。
 
-    - **Operation** - Clone from Image Service
-    - **Image** - FrameGuestAgentInstaller_1.0.2.2_7930.iso
+   - **Operation** - Clone from Image Service
+   - **Image** - FrameGuestAgentInstaller_1.0.2.2_7930.iso
 
 #. **Update > Save** をクリックします。
 
@@ -169,13 +169,13 @@ FGAは、セッション設定ポリシー（ローカルとFrameデスクトッ
 
 #. 約60秒後、リモートデスクトップ経由で仮想マシンに接続し、PowerShellで以下を実行します。（これは、ゴールデンイメージをクリーンなSysPrep状態にするために行われます）。
 
-    .. note::
+   .. note::
 
-       別のユーザーがログイン中というプロンプトが表示された場合は **Yes** をクリックして **Nutanix** ユーザーのままログインを続行します。
+    別のユーザーがログイン中というプロンプトが表示された場合は **Yes** をクリックして **Nutanix** ユーザーのままログインを続行します。
 
-    .. code-block:: PowerShell
+   .. code-block:: PowerShell
 
-      Start-Process -FilePath "C:\Windows\System32\Sysprep\Sysprep.exe" -ArgumentList "/oobe /shutdown /generalize /unattend:C:\ProgramData\Frame\Sysprep\Unattend.xml" -Wait -NoNewWindow
+    Start-Process -FilePath "C:\Windows\System32\Sysprep\Sysprep.exe" -ArgumentList "/oobe /shutdown /generalize /unattend:C:\ProgramData\Frame\Sysprep\Unattend.xml" -Wait -NoNewWindow
 
    Sysprepが完了すると、マシンの電源が自動的にオフになります。
 

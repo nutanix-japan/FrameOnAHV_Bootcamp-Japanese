@@ -49,15 +49,15 @@ Frameアカウントの作成
 
       **Customers**
 
-         Customers（顧客層）は、Frameプラットフォーム内の最上位の層です。Nutanix社との利用契約を結ぶ事業体の「マスターアカウント」です。
+      Customers（顧客層）は、Frameプラットフォーム内の最上位の層です。Nutanix社との利用契約を結ぶ事業体の「マスターアカウント」です。
 
       **Organizations**
 
-         Organizations（組織層）は、Frameプラットフォーム内で2番目に高い層です。ユースケースによっては、1顧客配下に多数の組織が作成される場合があります。企業は、Organizations（組織層）を使用して、社内のさまざまな部門に固有の環境をセットアップできます。この演習では、アカウントを保持する1組織を作成し、AHVクラスタリソースを紐付けます。
+      Organizations（組織層）は、Frameプラットフォーム内で2番目に高い層です。ユースケースによっては、1顧客配下に多数の組織が作成される場合があります。企業は、Organizations（組織層）を使用して、社内のさまざまな部門に固有の環境をセットアップできます。この演習では、アカウントを保持する1組織を作成し、AHVクラスタリソースを紐付けます。
 
       **Accounts**
 
-         ワークロードVMを提供する場所です。また、ユーザー用のローンチパッドを作成する場所でもあります。エンドユーザーがFrameにログインすると、ワークロードVMに接続するために組織下にある各アカウントに関連付けられた各アカウント毎のローンチパッドにアクセスします。
+      ワークロードVMを提供する場所です。また、ユーザー用のローンチパッドを作成する場所でもあります。エンドユーザーがFrameにログインすると、ワークロードVMに接続するために組織下にある各アカウントに関連付けられた各アカウント毎のローンチパッドにアクセスします。
 
 Prismサービスアカウントの追加
 ++++++++++++++++++++++++++++
@@ -93,10 +93,10 @@ FrameはPrism CentralのCategoriesを使用して、Cloud Connector Applianceが
    - **Name** - FrameRole
    - **Purpose** - Allowing resource access based on Application Team
    - **Values**
-
-      - Instance
-      - Template
-      - MasterTemplate
+   
+    - Instance
+    - Template
+    - MasterTemplate
 
    .. note::
 
