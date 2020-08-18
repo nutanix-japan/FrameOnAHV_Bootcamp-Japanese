@@ -1,12 +1,12 @@
 .. _framerightsize:
 
 ------------------------------------
-Prism Opsを使用したデスクトップの適切なサイズ設定
+Prism Proを使用したデスクトップの適切なサイズ設定
 ------------------------------------
 
 .. figure:: images/operationstriangle.png
 
-Prism Opsにより、監視、分析、アクションといったIT運用の業務サイクルをスマートに自動化することができます。Prism Opsを使用すると、IT管理者は機械学習エンジンX-FITおよび自動化エンジンX-Playの機能を使用できます。これにより、機械学習データを基にして日常の業務フローを自動化し、運用業務を効率化します。
+Prism Proにより、監視、分析、アクションといったIT運用の業務サイクルをスマートに自動化することができます。Prism Proを使用すると、IT管理者は機械学習エンジンX-FITおよび自動化エンジンX-Playの機能を使用できます。これにより、機械学習データを基にして日常の業務フローを自動化し、運用業務を効率化します。
 
 この演習では、仮想マシンのメモリーリソースが制限されている場合に、PrismがIT管理者の監視、分析、および自動化にどのように役立つかを学習します。
 
@@ -19,7 +19,8 @@ Prism Opsにより、監視、分析、アクションといったIT運用の業
 
    .. figure:: images/init1.png
 
-#. ブラウザーで新しいタブを開き http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts [example http://10.42.113.52/alerts] に移動します。VMを初めて使用する場合は、VMにログインする必要がある場合があります。 **Prism Central IP**、 **Username** と **Password** 入力して **Login** をクリックします。
+#. ブラウザーで新しいタブを開き
+ http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts に移動します。VMを初めて使用する場合は、VMにログインする必要がある場合があります。 **Prism Central IP**、 **Username** と **Password** 入力して **Login** をクリックします。
 
    .. figure:: images/init2.png
 
@@ -27,16 +28,16 @@ Prism Opsにより、監視、分析、アクションといったIT運用の業
 
    .. figure:: images/init2b.png
 
-#. 別のタブで http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ [example http://10.42.113.52/] にアクセスして、このUIで演習を完了させます。
+#. 別のタブで http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/ にアクセスして、このUIで演習を完了させます。
 
    .. figure:: images/init3.png
 
-Prism OpsのX-FITによる非効率なリソースの検出
+Prism ProのX-FITによる非効率なリソースの検出
 +++++++++++++++++++++++++++++++++++++++++++
 
-Prism Opsは機械学習X-FITを使用して、クラスター内で実行されているVMの動作を検出および監視します。
+Prism Proは機械学習X-FITを使用して、クラスター内で実行されているVMの動作を検出および監視します。
 
-また、Prism Opsは機械学習を使用してデータを分析し、非効率であると学習されたVMを以下の分類を適用します。
+また、Prism Proは機械学習を使用してデータを分析し、非効率であると学習されたVMを以下の分類を適用します。
 
   * **Overprovisioned:** 割り当てられたリソースの最小量を使用していると特定されたVM
   * **Inactive:** 一定期間電源がオフになっているVM、またはCPU、メモリー、またはI/Oリソースを消費しない状態と特定されたVM
@@ -45,11 +46,11 @@ Prism Opsは機械学習X-FITを使用して、クラスター内で実行され
 
 #. **Prism Central** から :fa:`bars` **> Dashboard** に移動します。
 
-#. ダッシュボードのVM Efficiencyウィジェットを確認します。このウィジェットは、Prism Opsの機械学習X-FITがクラスター内で検出した非効率的なVM数を表示します。ウィジェットの下部にある View All Inefficeint VMsリンクをクリックして詳細を確認します。
+#. ダッシュボードのVM Efficiencyウィジェットを確認します。このウィジェットは、Prism Proの機械学習X-FITがクラスター内で検出した非効率的なVM数を表示します。ウィジェットの下部にある View All Inefficeint VMsリンクをクリックして詳細を確認します。
 
    .. figure:: images/ppro_58.png
 
-#. Prism OpsがこれらのVMを検知した理由について表示されています。リストビューのいずれかを選択して、Efficiency Detail 列のテキストにカーソルを合わせると説明全体が表示されます。
+#. Prism ProがこれらのVMを検知した理由について表示されています。リストビューのいずれかを選択して、Efficiency Detail 列のテキストにカーソルを合わせると説明全体が表示されます。
 
    .. figure:: images/ppro_59.png
 
@@ -59,7 +60,7 @@ Prism Opsは機械学習X-FITを使用して、クラスター内で実行され
    * **X-Play:** X-Playの自動プレイブックを使用して、トリガーなどによりVMのサイズを自動的に変更します。この演習の後半で実際に演習を行ないます。
    * **Automation:** PowerShellやREST-APIなどによる自動化を使用して、VMのサイズを変更します。
 
-   Prism Opsは、この機械学習データを使用して、VM、ホスト、およびクラスターのメトリックデータのベースラインまたは予想範囲を生成することもできます。X-FITアルゴリズムは、これらのエンティティの通常の動作を学習し、それをさまざまなグラフで表すことができます。メトリック値がこの予想範囲から逸脱すると、Prism Opsは異常を発生させます。
+   Prism Proは、この機械学習データを使用して、VM、ホスト、およびクラスターのメトリックデータのベースラインまたは予想範囲を生成することもできます。X-FITアルゴリズムは、これらのエンティティの通常の動作を学習し、それをさまざまなグラフで表すことができます。メトリック値がこの予想範囲から逸脱すると、Prism Proは異常を発生させます。
 
 #. 次に「bootcamp_good」でキーワード検索をして bootcamp_good_1 を選択し、VMを見てみましょう。
 
@@ -197,7 +198,7 @@ X-PlayによりVMメモリーを自動的に増やす
 
    .. figure:: images/rs22.png
 
-#. 次に、ワークフローをトリガーします。 **/alerts** URL [example 10.42.113.52/alerts] を使用して、セットアップで開いたタブに移動します。 **VM Memory Constrained** Radioを選択しVMを入力します。 **Simulate Alert** ボタンをクリックします。これにより、VMのメモリー制限のアラートをシミュレートします。
+#. 次に、ワークフローをトリガーします。 事前に開いていた ** http://`<GTSPrismOpsLabUtilityServer_IP_ADDRESS>`/alerts**  を使用して、セットアップで開いたタブに移動します。 **VM Memory Constrained** Radioを選択しVMを入力します。 **Simulate Alert** ボタンをクリックします。これにより、VMのメモリー制限のアラートをシミュレートします。
 
    .. figure:: images/rs23.png
 
@@ -236,7 +237,7 @@ X-PlayによりVMメモリーを自動的に増やす
 本章のまとめ
 .........
 
-- Prism Opsは、IT OPSをよりスマートで自動化するためのソリューションです。 インテリジェントな検出から自動修復までのIT OPSプロセスをカバーしています。
+- Prism Proは、IT OPSをよりスマートで自動化するためのソリューションです。 インテリジェントな検出から自動修復までのIT OPSプロセスをカバーしています。
 
 - X-FITは、異常検出や非効率さの検出などのスマートIT OPSをサポートする当社の機械学習エンジンです。
 

@@ -4,23 +4,23 @@
 Linux Tools VM
 ---------------
 
-Overview
+概要
 +++++++++
 
-This CentOS VM image will be staged with packages used to support multiple lab exercises.
+このCentOS VMイメージは、複数のラボ演習をサポートするために使用されるパッケージを持ちます。
 
-Deploy this VM on your assigned cluster if directed to do so as part of **Lab Setup**.
+ **Lab Setup** の一環として指示された場合は、割り当てられたクラスターにこのVMをデプロイします。
 
 .. raw:: html
 
-  <strong><font color="red">Only deploy the VM once, it does not need to be cleaned up as part of any lab completion.</font></strong>
+  <strong><font color="red">VMは1度だけデプロイします。ラボの完了時にクリーンアップする必要はありません。</font></strong>
 
-Deploying CentOS
+CentOSのデプロイ
 ++++++++++++++++
 
-In **Prism Central** > select :fa:`bars` **> Virtual Infrastructure > VMs**, and click **Create VM**.
+**Prism Central** > :fa:`bars` **> Virtual Infrastructure > VMs** にて **Create VM** をクリックする。
 
-Fill out the following fields:
+以下情報を入力する。:
 
 - **Name** - *Initials*-Linux-ToolsVM
 - **Description** - (Optional) Description for your VM.
@@ -31,13 +31,11 @@ Fill out the following fields:
 - Select **+ Add New Disk**
     - **Type** - DISK
     - **Operation** - Clone from Image Service
-    - **Image** - Linux_ToolsVM.qcow2
+    - **Image** - CentOS7.qcow2
     - Select **Add**
 
-- Select **Add New NIC**
-    - **VLAN Name** - Primary
-    - Select **Add**
+- **Add New NIC** を選択
+    - **VLAN Name** - primary
+    - **Add** をクリック
 
-Click **Save** to create the VM.
-
-Power on the VM.
+ **Save** をクリックして仮想マシンを作成します。
