@@ -94,7 +94,7 @@ FrameはPrism CentralのCategoriesを使用して、Cloud Connector Applianceが
    - **Name** - FrameRole
    - **Purpose** - Allowing resource access based on Application Team
    - **Values**
-   
+
     - Instance
     - Template
     - MasterTemplate
@@ -169,7 +169,7 @@ CCAの設定
 
 #. 以下のフィールドに入力し **Log In** をクリックして、CCAをオンプレミスのNutanix環境に接続します。
 
-   - **Username** - 既に作成している *Initials*\ -FramceSvc account
+   - **Username** - 既に作成している *Initials*\ -FrameSvc account
    - **Password** - nutanix/4u
    - **Prism Central URL** - \https://<*Prism Central IP*>:9440
 
