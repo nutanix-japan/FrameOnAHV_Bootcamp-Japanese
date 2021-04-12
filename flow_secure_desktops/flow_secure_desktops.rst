@@ -45,19 +45,16 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
       構成によっては **Buffer instances** を **0** に減らす場合もあります。
 
-#. サイドバーから **Status** を選択し、**Sandbox** VMの **Machine ID** をコピーします。
+#. Frame 管理コンソールの **Summary** > **Account details** を表示し、 **Vendor ID** をコピーします。
 
    .. figure:: images/3c.png
 
-#. **Prism Central > Virtual Infrastructure > VMs** から、対象のサンドボックスを特定するために **Machine ID** でフィルタリングします。
 
-   .. figure:: images/3d.png
+#. **Prism Central > Virtual Infrastructure > VMs** から **Filters** > **NAME** **Contains** に **frame-instance-prod-v***Vendor ID* (例.frame-instance-prod-v34182) でフィルターして、対象のFrame VMを抽出します。
 
-#. VMを選択し **Actions > Manage Categories** をクリックします。Frameアカウントに対応する **FrameAccountID** の値をコピーします。 **Cancel** をクリックします。
+.. figure:: images/3h.png
 
-   .. figure:: images/3h.png
-
-#. **Prism Central > Virtual Infrastructure > VMs** から **Category** の **FrameAccountID** でフィルターして、対象のFrame VMを抽出します。 **frame-instance-prod...** VMを全て選択し **Actions > Manage Categories** をクリックします。
+#. VMを全て選択し **Actions > Manage Categories** をクリックします。
 
    .. figure:: images/3i.png
 
@@ -70,7 +67,7 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 デスクトップのセキュリティポリシーの作成
 ++++++++++++++++++++++++++++++++++
 
-#. **Prism Central** から :fa:`bars` **> Policies > Security Policies** を選択します。
+#. **Prism Central** から :fa:`bars` **> Policies > Security ** を選択します。
 
 #. **Create Security Policy > Secure Applications (App Policy) > Create** をクリックします。
 
@@ -91,11 +88,9 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
    .. figure:: images/7.png
 
-#. **+ Add Tier** をクリックします。
+#. ドロップダウンから **AppTier:**\ *Initials*-**Frame-W10NP** を選択します。
 
-#. ドリップダウンから **AppTier:**\ *Initials*-**Frame-W10NP** を選択します。
-
-#. **AppTier:Default** に対して、手順7〜8を繰り返します。
+#. 次のドロップダウンから **AppTier:Default** を選択します。。
 
    .. figure:: images/8.png
 
@@ -112,18 +107,25 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
    .. figure:: images/10.png
 
 #. **AppTier:**\ *Initials*\ **-Frame-W10NP** をクリックし **No** を選択して、このTierのVM間の通信を禁止します。これにより、デスクトップ間の通信がブロックされます。
+
    .. figure:: images/11.png
 
-#. 一方で **AppTier:**\ *Initials*-**PD** がまだ選択されていますので **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
+#. 他の演習からの続きで **AppTier:Initials-PD** が選択されている場合 **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
 
-#. 次の項目を入力して、Frameデスクトップと **Default** のVM間のTCPポート **7680** での通信を許可し、ピアツーピアでのWindows更新を許可します。
+#. **Service Details** の **Select a Service** をクリックし、 **+New service** をクリックします。
 
+   .. figure:: images/11a.png
+
+#. **Create Service** の画面で以下の項目を入力します。
+   - **Name** - WindowsUpdate
    - **Protocol** - TCP
    - **Ports** - 7680
 
-   .. figure:: images/12.png
+   .. figure:: images/11b.png
 
 #. **Save** をクリックします。
+
+   .. figure:: images/12.png
 
 #. **Next** をクリックして、セキュリティポリシーを確認します。
 
@@ -144,7 +146,7 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
    デスクトップ間でpingできますか？なぜですか？
 
-#. **Prism Central > Policies > Security Policies** から *Initials*\ **-FrameDesktops** ポリシーを選択します。
+#. **Prism Central > Policies > Security** から *Initials*\ **-FrameDesktops** ポリシーを選択します。
 
 #. **Actions > Apply** をクリックします。
 

@@ -68,6 +68,21 @@ Windows Update の一時停止
 
    .. figure:: images/24.png
 
+#. タスクバーの検索で **Firewall ＆** を検索し、**Firewall & Network protection**を開きます。
+
+   .. figure:: images/24a.png
+
+#. **Private network** をクリックします。
+
+   .. figure:: images/24b.png
+
+#. **Windows Defender Firewall** をクリックし **Off** に変更します。画面左上の**←**をクリックし前の画面に戻ります。
+
+   .. figure:: images/24c.png
+
+#. **Domain network** および **Public network** それぞれに同じ手順で **Windows Defender Firewall** をクリックし **Off** に変更します。完了後、右上の **×** でウィンドウを閉じます。
+
+
 Citrix Optimizerの実行
 ++++++++++++++++++++++++
 

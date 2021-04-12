@@ -94,7 +94,7 @@ FrameはPrism CentralのCategoriesを使用して、Cloud Connector Applianceが
    - **Name** - FrameRole
    - **Purpose** - Allowing resource access based on Application Team
    - **Values**
-   
+
     - Instance
     - Template
     - MasterTemplate
@@ -169,7 +169,7 @@ CCAの設定
 
 #. 以下のフィールドに入力し **Log In** をクリックして、CCAをオンプレミスのNutanix環境に接続します。
 
-   - **Username** - 既に作成している *Initials*\ -FramceSvc account
+   - **Username** - 既に作成している *Initials*\ -FrameSvc account
    - **Password** - nutanix/4u
    - **Prism Central URL** - \https://<*Prism Central IP*>:9440
 
@@ -180,12 +180,17 @@ CCAの設定
    - **Cluster for virtual desktops** - *割り当てられているクラスター*
    - **Network for virtual desktops** - Primary
    - **Cloud account name** - *Initials*\ -\ *Cluster-Name*
+   - **Prism Element Username** - Admin
+   - **Prism Element Password** - *ラボのAdminパスワード*
 
-   .. figure:: images/5b.png
+   **Enable enterprise profiles and personal drives** は演習では使用しないので選択する必要はありません。
 
-   .. note::
+   入力が完了したら **Verify** をクリックし、 **Next** をクリックします。
 
-      **Enable enterprise profiles and personal drives** は演習では使用しないので選択する必要はありません。
+
+   .. figure:: images/5c.png
+
+
 
 #. **Define Instance Types** で、既存のプロファイルを **AHV 2vCPU 4GB** に編集します。さらに図のように **Instance Type** を追加します。 **Next** をクリックします。インスタンスタイプは、アプリケーションを実行するために起動されるVM構成です。パブリッククラウド環境では、そのクラウドプロバイダーで利用可能なインスタンスタイプ（AWS t.2largeなど）がマッピングされます。
 
