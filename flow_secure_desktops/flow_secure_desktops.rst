@@ -50,9 +50,9 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
    .. figure:: images/3c.png
 
 
-#. **Prism Central > Virtual Infrastructure > VMs** から **Filters** > **NAME** **Contains** に **frame-instance-prod-v***Vendor ID* (例.frame-instance-prod-v34182) でフィルターして、対象のFrame VMを抽出します。
+#. **Prism Central > Virtual Infrastructure > VMs** から **Filters** > **NAME** **Contains** に **frame-instance-prod-v** *Vendor ID* (例.frame-instance-prod-v34182) でフィルターして、対象のFrame VMを抽出します。
 
-.. figure:: images/3h.png
+   .. figure:: images/3h.png
 
 #. VMを全て選択し **Actions > Manage Categories** をクリックします。
 
