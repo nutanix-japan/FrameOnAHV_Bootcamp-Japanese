@@ -45,7 +45,7 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
       構成によっては **Buffer instances** を **0** に減らす場合もあります。
 
-#. Frame 管理コンソールの **Summary** > **Account details** を表示し、 **Vendor ID** をコピーします。
+#. Frame 管理ポータルの **Summary** > **Account details** を表示し、 **Vendor ID** をコピーします。
 
    .. figure:: images/3c.png
 
@@ -145,7 +145,7 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
    .. figure:: images/13.png
 
-   デスクトップ間でpingできますか？なぜですか？
+   デスクトップ間でpingは通りますか？それはなぜでしょう？
 
 #. **Prism Central > Policies > Security** から *Initials*\ **-FrameDesktops** ポリシーを選択します。
 
