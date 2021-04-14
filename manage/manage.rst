@@ -27,6 +27,7 @@ Frameアカウントには何がありますか？frameアカウントは、少�
    .. figure:: images/1b.png
 
 #. **Configuration** で、次の項目を入力して **Next** をクリックします。
+
    - **Base Image family** - Windows 10
    - **Instance Type** - AHV 2vCPU 4GB
    - **Disk size** - 100GB *( スライダーまたは数値を入力 )*
@@ -66,13 +67,15 @@ Frameアカウントには何がありますか？frameアカウントは、少�
 
 #. **+ Add instance type** をクリックします。
 
-#. **Instance type** ドロップダウンから **AHV AHV 4vCPU 6GB** を選択し **Add** をクリックします。
+#. **Instance type** ドロップダウンから **AHV 4vCPU 6GB** を選択し **Add** をクリックします。
 
    .. figure:: images/4a.png
 
 #. 追加した **AHV 4vCPU 6GB** タブをクリックし、 **Max number of instance** の値がゼロである事を確認します。
 
-.. figure:: images/4b.png
+   .. figure:: images/4b.png
+
+#. **AHV 2vCPU 4GB** タブをクリックします。
 
 #. **AHV 2vCPU 4GB** タブで、 **Buffer instances** を **1** と **Max number of instances** を **3** に増やします。 **Save > Confirm** をクリックします。
 
@@ -134,10 +137,10 @@ Frameアカウントには何がありますか？frameアカウントは、少�
 
 #. **Instance Pools** で **AHV 4vCPU 6GB** トグルをオンにします。
 
-  .. figure:: images/9a.png
+   .. figure:: images/9a.png
 
 
-  .. note::
+   .. note::
 
       複数のタイプが利用可能な場合、ローンチパッドはインスタンスタイプごとに有効または無効にできます。これは2つの目的で使用されます。
 
@@ -145,9 +148,8 @@ Frameアカウントには何がありますか？frameアカウントは、少�
 
       - ハイエンドの3D CADアプリケーションなどの特定のアプリを、高性能のGPUアクセラレートVMなどの特定のインスタンスタイプでのみ使用できるようにする場合
 
-#. ローンチパッドのカスタマイズが完了したら **Save** をクリックします。
 
-----------------------------------------------------------------
+#. ローンチパッドのカスタマイズが完了したら **Save** をクリックします。
 
 #. **+ Add Launchpad** をクリックして、カスタマイズされた名前とURLスラグを含む **デスクトップ** ランチパッドを追加します。 **Add Launchpad** をクリックします。
 

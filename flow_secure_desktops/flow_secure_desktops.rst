@@ -67,7 +67,7 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 デスクトップのセキュリティポリシーの作成
 ++++++++++++++++++++++++++++++++++
 
-#. **Prism Central** から :fa:`bars` **> Policies > Security ** を選択します。
+#. **Prism Central** から :fa:`bars`  **> Policies > Security** を選択します。
 
 #. **Create Security Policy > Secure Applications (App Policy) > Create** をクリックします。
 
@@ -110,13 +110,14 @@ Flowのセキュリティポリシーは、VMが相互に通信することを�
 
    .. figure:: images/11.png
 
-#. 他の演習からの続きで **AppTier:Initials-PD** が選択されている場合 **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
+#. **AppTier:Default** の右側にある :fa:`plus-circle` アイコンをクリックしてください。
 
 #. **Service Details** の **Select a Service** をクリックし、 **+New service** をクリックします。
 
    .. figure:: images/11a.png
 
 #. **Create Service** の画面で以下の項目を入力します。
+
    - **Name** - WindowsUpdate
    - **Protocol** - TCP
    - **Ports** - 7680
